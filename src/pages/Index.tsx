@@ -1,8 +1,8 @@
-import { NewsAnalysis } from "@/components/NewsAnalysis";
-import { StockCard } from "@/components/StockCard";
-import { IndustryChain } from "@/components/IndustryChain";
-import { AnalystOpinion } from "@/components/AnalystOpinion";
-import { PriceChart } from "@/components/PriceChart";
+import { NewsAnalysisCompact } from "@/components/NewsAnalysisCompact";
+import { StockCardCompact } from "@/components/StockCardCompact";
+import { IndustryChainCompact } from "@/components/IndustryChainCompact";
+import { AnalystOpinionCompact } from "@/components/AnalystOpinionCompact";
+import { PriceChartCompact } from "@/components/PriceChartCompact";
 import { Sparkles, StickyNote } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -58,92 +58,88 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="w-[420px] h-[600px] bg-background overflow-hidden flex flex-col">
       {/* Header */}
-      <header className="sticky top-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-xl">
-        <div className="container mx-auto px-6 py-4">
+      <header className="flex-shrink-0 border-b border-border/50 bg-gradient-to-r from-card/80 to-card/40 backdrop-blur-xl">
+        <div className="px-4 py-3">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-primary flex items-center justify-center shadow-glow">
-                <Sparkles className="w-5 h-5 text-primary-foreground" />
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-lg bg-gradient-primary flex items-center justify-center shadow-glow">
+                <Sparkles className="w-4 h-4 text-primary-foreground" />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-foreground">财经新闻智能分析</h1>
-                <p className="text-xs text-muted-foreground">AI-Powered Financial News Analysis</p>
+                <h1 className="text-sm font-bold text-foreground">财经新闻分析</h1>
+                <p className="text-xs text-muted-foreground">AI Analysis</p>
               </div>
             </div>
-            <Button variant="outline" className="border-border/50 hover:border-primary/50 hover:bg-primary/10">
-              <StickyNote className="w-4 h-4 mr-2" />
-              我的笔记
+            <Button size="sm" variant="ghost" className="h-8 w-8 p-0 hover:bg-primary/10">
+              <StickyNote className="w-4 h-4" />
             </Button>
           </div>
         </div>
       </header>
 
-      {/* Main Content */}
-      <main className="container mx-auto px-6 py-8 space-y-6">
+      {/* Main Content - Scrollable */}
+      <main className="flex-1 overflow-y-auto px-4 py-4 space-y-4 scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent">
         {/* News Analysis Section */}
         <section>
-          <NewsAnalysis {...mockNews} />
+          <NewsAnalysisCompact {...mockNews} />
         </section>
 
         {/* Related Stocks Section */}
         <section>
-          <h2 className="text-2xl font-bold text-foreground mb-4 flex items-center gap-2">
-            <span className="w-1 h-8 bg-gradient-primary rounded-full"></span>
+          <h2 className="text-base font-bold text-foreground mb-3 flex items-center gap-2">
+            <span className="w-0.5 h-4 bg-gradient-primary rounded-full"></span>
             相关股票
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 gap-2">
             {mockStocks.map((stock) => (
-              <StockCard key={stock.symbol} {...stock} />
+              <StockCardCompact key={stock.symbol} {...stock} />
             ))}
           </div>
         </section>
 
         {/* Price Chart */}
         <section>
-          <PriceChart symbol="NVDA" data={mockChartData} />
+          <PriceChartCompact symbol="NVDA" data={mockChartData} />
         </section>
 
         {/* Industry Chain */}
         <section>
-          <IndustryChain {...mockIndustryChain} />
+          <IndustryChainCompact {...mockIndustryChain} />
         </section>
 
         {/* Analyst Opinion */}
         <section>
-          <AnalystOpinion buy={18} hold={5} sell={2} />
+          <AnalystOpinionCompact buy={18} hold={5} sell={2} />
         </section>
 
         {/* Notes Section */}
         <section>
-          <Card className="p-6 bg-card/50 backdrop-blur-xl border-border/50 shadow-card">
-            <h3 className="text-lg font-bold text-foreground mb-4 flex items-center gap-2">
-              <span className="w-1 h-6 bg-gradient-primary rounded-full"></span>
-              我的交易笔记
+          <Card className="p-4 bg-card/50 backdrop-blur-xl border-border/50 shadow-card">
+            <h3 className="text-base font-bold text-foreground mb-3 flex items-center gap-2">
+              <span className="w-0.5 h-4 bg-gradient-primary rounded-full"></span>
+              快速笔记
             </h3>
             <Textarea
-              placeholder="记录您对这条新闻的思考和交易策略..."
+              placeholder="记录交易思考..."
               value={note}
               onChange={(e) => setNote(e.target.value)}
-              className="min-h-[120px] bg-background/50 border-border/50 focus:border-primary/50 resize-none"
+              className="min-h-[80px] bg-background/50 border-border/50 focus:border-primary/50 resize-none text-sm"
             />
-            <div className="flex justify-between items-center mt-4">
-              <p className="text-xs text-muted-foreground">
-                笔记仅保存在本地，不会上传到云端
-              </p>
-              <Button className="bg-gradient-primary hover:opacity-90 transition-opacity">
-                保存笔记
+            <div className="flex justify-end mt-3">
+              <Button size="sm" className="bg-gradient-primary hover:opacity-90 transition-opacity">
+                保存
               </Button>
             </div>
           </Card>
         </section>
 
         {/* Disclaimer */}
-        <section className="mt-8">
-          <Card className="p-4 bg-warning/5 border-warning/20">
-            <p className="text-xs text-muted-foreground text-center">
-              ⚠️ 本插件仅提供信息展示，不构成任何投资建议。投资有风险，决策需谨慎。
+        <section>
+          <Card className="p-3 bg-warning/5 border-warning/20">
+            <p className="text-xs text-muted-foreground text-center leading-relaxed">
+              ⚠️ 本插件仅提供信息展示，不构成投资建议
             </p>
           </Card>
         </section>
