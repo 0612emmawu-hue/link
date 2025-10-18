@@ -99,11 +99,6 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Price Chart */}
-        <section>
-          <PriceChartCompact symbol="NVDA" data={mockChartData} />
-        </section>
-
         {/* Industry Chain */}
         <section>
           <IndustryChainCompact {...mockIndustryChain} />
@@ -112,6 +107,11 @@ const Index = () => {
         {/* Analyst Opinion */}
         <section>
           <AnalystOpinionCompact buy={18} hold={5} sell={2} />
+        </section>
+
+        {/* Price Chart */}
+        <section>
+          <PriceChartCompact symbol="NVDA" data={mockChartData} />
         </section>
 
         {/* Notes Section */}
