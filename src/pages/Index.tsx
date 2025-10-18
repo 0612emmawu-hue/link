@@ -3,6 +3,7 @@ import { StockCardCompact } from "@/components/StockCardCompact";
 import { IndustryChainCompact } from "@/components/IndustryChainCompact";
 import { AnalystOpinionCompact } from "@/components/AnalystOpinionCompact";
 import { PriceChartCompact } from "@/components/PriceChartCompact";
+import { AISummary } from "@/components/AISummary";
 import { Sparkles, StickyNote } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -86,6 +87,21 @@ const Index = () => {
           <NewsAnalysisCompact {...mockNews} />
         </section>
 
+        {/* Industry Chain */}
+        <section>
+          <IndustryChainCompact {...mockIndustryChain} />
+        </section>
+
+        {/* Analyst Opinion */}
+        <section>
+          <AnalystOpinionCompact buy={18} hold={5} sell={2} />
+        </section>
+
+        {/* AI Summary */}
+        <section>
+          <AISummary newsTitle={mockNews.title} newsContent={mockNews.summary} />
+        </section>
+
         {/* Related Stocks Section */}
         <section>
           <h2 className="text-base font-bold text-foreground mb-3 flex items-center gap-2">
@@ -97,16 +113,6 @@ const Index = () => {
               <StockCardCompact key={stock.symbol} {...stock} />
             ))}
           </div>
-        </section>
-
-        {/* Industry Chain */}
-        <section>
-          <IndustryChainCompact {...mockIndustryChain} />
-        </section>
-
-        {/* Analyst Opinion */}
-        <section>
-          <AnalystOpinionCompact buy={18} hold={5} sell={2} />
         </section>
 
         {/* Price Chart */}
