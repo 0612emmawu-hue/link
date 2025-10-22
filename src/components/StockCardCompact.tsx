@@ -13,7 +13,7 @@ export const StockCardCompact = ({ symbol, company, price, change, changePercent
   const isPositive = change >= 0;
 
   return (
-    <Card className="p-3 bg-card/50 backdrop-blur-xl border-border/50 hover:border-primary/50 transition-all duration-300 cursor-pointer group">
+    <Card className="p-3 bg-card/50 backdrop-blur-xl border-border/50 hover:border-primary/50 transition-all duration-300 cursor-pointer group [box-shadow:var(--shadow-neumorphic-sm)] hover:[box-shadow:var(--shadow-glow)]">
       <div className="space-y-2">
         <div className="flex items-start justify-between gap-1">
           <div className="min-w-0 flex-1">

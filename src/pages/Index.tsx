@@ -82,31 +82,29 @@ const Index = () => {
 
       {/* Main Content - Scrollable */}
       <main className="flex-1 overflow-y-auto px-4 py-4 space-y-4 scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent">
-        {/* News Analysis Section */}
+        {/* Feature 1: AI 智能总结 */}
         <section>
-          <NewsAnalysisCompact {...mockNews} />
-        </section>
-
-        {/* Industry Chain */}
-        <section>
-          <IndustryChainCompact {...mockIndustryChain} />
-        </section>
-
-        {/* Analyst Opinion */}
-        <section>
-          <AnalystOpinionCompact buy={18} hold={5} sell={2} />
-        </section>
-
-        {/* AI Summary */}
-        <section>
+          <h2 className="text-xs font-semibold text-primary mb-2 uppercase tracking-wider flex items-center gap-1.5">
+            <span className="w-1 h-1 rounded-full bg-primary animate-pulse"></span>
+            AI 智能总结
+          </h2>
           <AISummary newsTitle={mockNews.title} newsContent={mockNews.summary} />
         </section>
 
-        {/* Related Stocks Section */}
+        {/* Feature 2: 产业链分析 */}
         <section>
-          <h2 className="text-base font-bold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-0.5 h-4 bg-gradient-primary rounded-full"></span>
-            相关股票
+          <h2 className="text-xs font-semibold text-primary mb-2 uppercase tracking-wider flex items-center gap-1.5">
+            <span className="w-1 h-1 rounded-full bg-primary animate-pulse"></span>
+            产业链分析
+          </h2>
+          <IndustryChainCompact {...mockIndustryChain} />
+        </section>
+
+        {/* Feature 3: 股票追踪 */}
+        <section>
+          <h2 className="text-xs font-semibold text-primary mb-2 uppercase tracking-wider flex items-center gap-1.5">
+            <span className="w-1 h-1 rounded-full bg-primary animate-pulse"></span>
+            股票追踪
           </h2>
           <div className="grid grid-cols-2 gap-2">
             {mockStocks.map((stock) => (
@@ -120,22 +118,36 @@ const Index = () => {
           <PriceChartCompact symbol="NVDA" data={mockChartData} />
         </section>
 
-        {/* Notes Section */}
+        {/* Feature 4: 市场情绪分析 */}
         <section>
-          <Card className="p-4 bg-card/50 backdrop-blur-xl border-border/50 shadow-card">
-            <h3 className="text-base font-bold text-foreground mb-3 flex items-center gap-2">
-              <span className="w-0.5 h-4 bg-gradient-primary rounded-full"></span>
-              快速笔记
-            </h3>
+          <h2 className="text-xs font-semibold text-primary mb-2 uppercase tracking-wider flex items-center gap-1.5">
+            <span className="w-1 h-1 rounded-full bg-primary animate-pulse"></span>
+            市场情绪分析
+          </h2>
+          <AnalystOpinionCompact buy={18} hold={5} sell={2} />
+        </section>
+
+        {/* News Analysis */}
+        <section>
+          <NewsAnalysisCompact {...mockNews} />
+        </section>
+
+        {/* Notes Feature */}
+        <section>
+          <h2 className="text-xs font-semibold text-primary mb-2 uppercase tracking-wider flex items-center gap-1.5">
+            <span className="w-1 h-1 rounded-full bg-primary animate-pulse"></span>
+            快速笔记
+          </h2>
+          <Card className="p-4 bg-card/50 backdrop-blur-xl border-border/50 [box-shadow:var(--shadow-neumorphic-sm)]">
             <Textarea
               placeholder="记录交易思考..."
               value={note}
               onChange={(e) => setNote(e.target.value)}
-              className="min-h-[80px] bg-background/50 border-border/50 focus:border-primary/50 resize-none text-sm"
+              className="min-h-[80px] bg-background/50 border-border/50 focus:border-primary/50 resize-none text-sm [box-shadow:var(--shadow-neumorphic-inset)]"
             />
             <div className="flex justify-end mt-3">
-              <Button size="sm" className="bg-gradient-primary hover:opacity-90 transition-opacity">
-                保存
+              <Button size="sm" className="bg-gradient-primary hover:opacity-90 transition-opacity shadow-glow">
+                保存笔记
               </Button>
             </div>
           </Card>

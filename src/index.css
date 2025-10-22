@@ -62,6 +62,17 @@ All colors MUST be HSL.
     --shadow-card: 0 8px 32px hsla(246 70% 58% / 0.12);
     --shadow-glow: 0 0 24px hsla(246 80% 68% / 0.3);
     --shadow-elevation: 0 4px 16px hsla(0 0% 0% / 0.4);
+    
+    /* Neomorphic shadows */
+    --shadow-neumorphic: 
+      8px 8px 16px hsla(229 32% 4% / 0.6),
+      -8px -8px 16px hsla(229 32% 14% / 0.4);
+    --shadow-neumorphic-inset: 
+      inset 4px 4px 8px hsla(229 32% 4% / 0.5),
+      inset -4px -4px 8px hsla(229 32% 14% / 0.3);
+    --shadow-neumorphic-sm: 
+      4px 4px 8px hsla(229 32% 4% / 0.4),
+      -4px -4px 8px hsla(229 32% 14% / 0.3);
 
     /* Transitions */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
