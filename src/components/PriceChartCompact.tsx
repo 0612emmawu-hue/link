@@ -28,7 +28,7 @@ export const PriceChartCompact = ({ symbol, data }: PriceChartCompactProps) => {
       <div className="flex items-center justify-between mb-3">
         <h3 className="text-base font-bold text-foreground flex items-center gap-2">
           <span className="w-0.5 h-4 bg-gradient-primary rounded-full"></span>
-          {symbol} 趋势
+          {symbol} Trend
         </h3>
         <div className="flex items-center gap-1 text-xs font-semibold">
           <TrendingUp className={`w-3 h-3 ${isPositive ? 'text-bullish' : 'text-bearish rotate-180'}`} />

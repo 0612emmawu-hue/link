@@ -17,7 +17,7 @@ export const AnalystOpinionCompact = ({ buy, hold, sell }: AnalystOpinionCompact
     <Card className="p-4 bg-card/50 backdrop-blur-xl border-border/50 shadow-card">
       <h3 className="text-base font-bold text-foreground mb-4 flex items-center gap-2">
         <span className="w-0.5 h-4 bg-gradient-primary rounded-full"></span>
-        分析师观点
+        Analyst Sentiment
       </h3>
       
       <div className="space-y-3">
@@ -56,7 +56,7 @@ export const AnalystOpinionCompact = ({ buy, hold, sell }: AnalystOpinionCompact
               <TrendingUp className="w-3 h-3 text-bullish" />
             </div>
             <div>
-              <p className="text-xs text-muted-foreground">买入</p>
+              <p className="text-xs text-muted-foreground">Buy</p>
               <p className="text-sm font-bold text-foreground">{buy}</p>
             </div>
           </div>
@@ -65,7 +65,7 @@ export const AnalystOpinionCompact = ({ buy, hold, sell }: AnalystOpinionCompact
               <Minus className="w-3 h-3 text-warning" />
             </div>
             <div>
-              <p className="text-xs text-muted-foreground">持有</p>
+              <p className="text-xs text-muted-foreground">Hold</p>
               <p className="text-sm font-bold text-foreground">{hold}</p>
             </div>
           </div>
@@ -74,7 +74,7 @@ export const AnalystOpinionCompact = ({ buy, hold, sell }: AnalystOpinionCompact
               <TrendingDown className="w-3 h-3 text-bearish" />
             </div>
             <div>
-              <p className="text-xs text-muted-foreground">卖出</p>
+              <p className="text-xs text-muted-foreground">Sell</p>
               <p className="text-sm font-bold text-foreground">{sell}</p>
             </div>
           </div>
