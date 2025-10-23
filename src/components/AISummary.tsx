@@ -2,7 +2,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Sparkles, Languages, Loader2 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface AISummaryProps {
   newsTitle: string;
@@ -14,6 +14,7 @@ export const AISummary = ({ newsTitle, newsContent }: AISummaryProps) => {
   const [summary, setSummary] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isTranslating, setIsTranslating] = useState(false);
+  const [showTranslate, setShowTranslate] = useState(false);
 
   const languages = [
     { value: "zh-CN", label: "简体中文" },
@@ -26,17 +27,23 @@ export const AISummary = ({ newsTitle, newsContent }: AISummaryProps) => {
     { value: "de", label: "Deutsch" },
   ];
 
+  // Auto-generate summary on mount
+  useEffect(() => {
+    handleGenerate();
+  }, []);
+
   const handleGenerate = async () => {
     setIsLoading(true);
+    setShowTranslate(false);
     // TODO: Backend API call - summarization
     // API Input: current webpage content (newsTitle + newsContent)
-    // API Output: text summary in selected language
+    // API Output: text summary as bullet points
     setTimeout(() => {
       const summaries: Record<string, string> = {
-        en: `The Federal Reserve announced maintaining interest rates unchanged at its latest monetary policy meeting, in line with market expectations. The post-meeting statement shows easing inflationary pressures and resilient economic growth. This news drove significant gains in tech stocks, particularly in AI and semiconductor-related sectors.`,
-        zh: `美联储在最新的货币政策会议中决定维持基准利率不变，符合市场预期。会后声明显示通胀压力有所缓解，经济增长保持韧性。此消息推动科技股大幅上涨，特别是人工智能和半导体相关板块表现突出。`,
-        ja: `連邦準備制度は最新の金融政策会議で金利を据え置くことを発表し、市場の予想と一致しました。会議後の声明では、インフレ圧力の緩和と経済成長の回復力が示されています。`,
-        ko: `연방준비제도는 최신 통화정책 회의에서 금리를 동결하기로 발표했으며, 이는 시장 예상과 일치합니다. 회의 후 성명은 인플레이션 압력 완화와 경제 성장의 회복력을 보여줍니다.`,
+        en: `• Federal Reserve maintains interest rates unchanged at latest monetary policy meeting\n• Decision aligns with market expectations\n• Post-meeting statement indicates easing inflationary pressures\n• Economic growth remains resilient\n• Tech stocks experience significant gains, especially AI and semiconductor sectors`,
+        zh: `• 美联储在最新货币政策会议中维持基准利率不变\n• 决定符合市场预期\n• 会后声明显示通胀压力有所缓解\n• 经济增长保持韧性\n• 科技股大幅上涨，尤其是人工智能和半导体板块`,
+        ja: `• 連邦準備制度が最新の金融政策会議で金利を据え置き\n• 決定は市場の予想と一致\n• 会議後の声明でインフレ圧力の緩和を示唆\n• 経済成長は回復力を維持\n• テクノロジー株が大幅上昇、特にAIと半導体セクター`,
+        ko: `• 연방준비제도가 최신 통화정책 회의에서 금리 동결\n• 결정은 시장 예상과 일치\n• 회의 후 성명에서 인플레이션 압력 완화 시사\n• 경제 성장은 회복력 유지\n• 기술주가 크게 상승, 특히 AI와 반도체 부문`,
       };
       setSummary(summaries[selectedLanguage] || summaries.en);
       setIsLoading(false);
@@ -65,81 +72,63 @@ export const AISummary = ({ newsTitle, newsContent }: AISummaryProps) => {
           </h3>
         </div>
 
-        {!summary ? (
-          <div className="flex gap-2">
-            <Select value={selectedLanguage} onValueChange={setSelectedLanguage}>
-              <SelectTrigger className="w-[140px] h-8 text-xs">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {languages.map((lang) => (
-                  <SelectItem key={lang.value} value={lang.value} className="text-xs">
-                    {lang.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            
-            <Button 
-              size="sm" 
-              onClick={handleGenerate}
-              disabled={isLoading}
-              className="h-8 bg-gradient-primary hover:opacity-90 transition-opacity shadow-glow flex-1"
-            >
-              {isLoading ? (
-                <>
-                  <Loader2 className="w-3 h-3 mr-1 animate-spin" />
-                  Generating...
-                </>
-              ) : (
-                <>
-                  <Sparkles className="w-3 h-3 mr-1" />
-                  Generate Summary
-                </>
-              )}
-            </Button>
+        {isLoading ? (
+          <div className="flex items-center justify-center py-8">
+            <Loader2 className="w-6 h-6 animate-spin text-primary" />
+            <span className="ml-2 text-sm text-muted-foreground">Generating summary...</span>
           </div>
         ) : (
           <>
-            <div className="p-3 bg-muted/50 rounded-lg border border-border/50 min-h-[60px] max-h-[200px] overflow-y-auto">
-              <p className="text-xs text-foreground leading-relaxed whitespace-pre-wrap">
+            <div className="p-3 bg-muted/50 rounded-lg border border-border/50 min-h-[60px] max-h-none overflow-y-auto">
+              <div className="text-xs text-foreground leading-relaxed whitespace-pre-wrap">
                 {summary}
-              </p>
+              </div>
             </div>
-            <div className="flex gap-2">
-              <Select value={selectedLanguage} onValueChange={setSelectedLanguage}>
-                <SelectTrigger className="w-[140px] h-8 text-xs">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {languages.map((lang) => (
-                    <SelectItem key={lang.value} value={lang.value} className="text-xs">
-                      {lang.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              
+            {!showTranslate ? (
               <Button 
                 size="sm" 
-                onClick={handleTranslate}
-                disabled={isTranslating}
+                onClick={() => setShowTranslate(true)}
                 variant="outline"
-                className="h-8 flex-1"
+                className="h-8 w-full"
               >
-                {isTranslating ? (
-                  <>
-                    <Loader2 className="w-3 h-3 mr-1 animate-spin" />
-                    Translating...
-                  </>
-                ) : (
-                  <>
-                    <Languages className="w-3 h-3 mr-1" />
-                    Translate
-                  </>
-                )}
+                <Languages className="w-3 h-3 mr-1" />
+                Translate
               </Button>
-            </div>
+            ) : (
+              <div className="flex gap-2">
+                <Select value={selectedLanguage} onValueChange={setSelectedLanguage}>
+                  <SelectTrigger className="w-[140px] h-8 text-xs">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {languages.map((lang) => (
+                      <SelectItem key={lang.value} value={lang.value} className="text-xs">
+                        {lang.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                
+                <Button 
+                  size="sm" 
+                  onClick={handleTranslate}
+                  disabled={isTranslating}
+                  className="h-8 flex-1 bg-gradient-primary hover:opacity-90"
+                >
+                  {isTranslating ? (
+                    <>
+                      <Loader2 className="w-3 h-3 mr-1 animate-spin" />
+                      Translating...
+                    </>
+                  ) : (
+                    <>
+                      <Languages className="w-3 h-3 mr-1" />
+                      Apply Translation
+                    </>
+                  )}
+                </Button>
+              </div>
+            )}
           </>
         )}
       </div>

@@ -14,7 +14,7 @@ export const MarketSegmentCompact = ({ segments }: MarketSegmentCompactProps) =>
     <Card className="p-4 bg-card/50 backdrop-blur-xl border-border/50 shadow-card">
       <h3 className="text-base font-bold text-foreground mb-4 flex items-center gap-2">
         <span className="w-0.5 h-4 bg-gradient-primary rounded-full"></span>
-        Market Segments
+        Market Segment Statistics
       </h3>
 
       <div className="flex items-center gap-4">

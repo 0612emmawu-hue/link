@@ -6,7 +6,7 @@ import { AISummary } from "@/components/AISummary";
 import { MarketSegmentCompact } from "@/components/MarketSegmentCompact";
 import { FloatingNotes } from "@/components/FloatingNotes";
 import { NotesDashboard } from "@/components/NotesDashboard";
-import { Sparkles, BookOpen, Plus } from "lucide-react";
+import { Sparkles, BookOpen, Plus, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
@@ -133,6 +133,7 @@ const Index = () => {
                 variant="ghost" 
                 className="h-8 w-8 p-0 hover:bg-primary/10 relative"
                 onClick={() => setShowNotesDashboard(true)}
+                title="Notes Dashboard"
               >
                 <BookOpen className="w-4 h-4" />
                 {notes.length > 0 && (
@@ -145,7 +146,17 @@ const Index = () => {
                 size="sm" 
                 variant="ghost" 
                 className="h-8 w-8 p-0 hover:bg-primary/10"
+                onClick={() => {/* TODO: Add watchlist management */}}
+                title="Manage Watchlist"
+              >
+                <Eye className="w-4 h-4" />
+              </Button>
+              <Button 
+                size="sm" 
+                variant="ghost" 
+                className="h-8 w-8 p-0 hover:bg-primary/10"
                 onClick={() => setShowFloatingNotes(true)}
+                title="Quick Notes"
               >
                 <Plus className="w-4 h-4" />
               </Button>

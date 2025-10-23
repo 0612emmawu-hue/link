@@ -7,13 +7,26 @@ interface StockCardCompactProps {
   price: number;
   change: number;
   changePercent: number;
+  onClick?: () => void;
 }
 
-export const StockCardCompact = ({ symbol, company, price, change, changePercent }: StockCardCompactProps) => {
+export const StockCardCompact = ({ symbol, company, price, change, changePercent, onClick }: StockCardCompactProps) => {
   const isPositive = change >= 0;
 
+  const handleClick = () => {
+    if (onClick) {
+      onClick();
+    } else {
+      // Default: open Yahoo Finance page for the stock
+      window.open(`https://finance.yahoo.com/quote/${symbol}`, '_blank');
+    }
+  };
+
   return (
-    <Card className="p-3 bg-card/50 backdrop-blur-xl border-border/50 hover:border-primary/50 transition-all duration-300 cursor-pointer group [box-shadow:var(--shadow-neumorphic-sm)] hover:[box-shadow:var(--shadow-glow)]">
+    <Card 
+      onClick={handleClick}
+      className="p-3 bg-card/50 backdrop-blur-xl border-border/50 hover:border-primary/50 transition-all duration-300 cursor-pointer group [box-shadow:var(--shadow-neumorphic-sm)] hover:[box-shadow:var(--shadow-glow)]"
+    >
       <div className="space-y-2">
         <div className="flex items-start justify-between gap-1">
           <div className="min-w-0 flex-1">

@@ -2,7 +2,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { X, Save, GripVertical } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface FloatingNotesProps {
   onClose: () => void;
@@ -36,16 +36,19 @@ export const FloatingNotes = ({ onClose, onSave }: FloatingNotesProps) => {
     setIsDragging(false);
   };
 
-  useState(() => {
+  useEffect(() => {
     if (isDragging) {
-      window.addEventListener("mousemove", handleMouseMove);
-      window.addEventListener("mouseup", handleMouseUp);
+      const handleMove = (e: MouseEvent) => handleMouseMove(e);
+      const handleUp = () => handleMouseUp();
+      
+      window.addEventListener("mousemove", handleMove);
+      window.addEventListener("mouseup", handleUp);
       return () => {
-        window.removeEventListener("mousemove", handleMouseMove);
-        window.removeEventListener("mouseup", handleMouseUp);
+        window.removeEventListener("mousemove", handleMove);
+        window.removeEventListener("mouseup", handleUp);
       };
     }
-  });
+  }, [isDragging]);
 
   const handleSave = () => {
     if (note.trim()) {

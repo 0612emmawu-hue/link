@@ -48,15 +48,15 @@ export const IndustryChainCompact = ({ upstream, midstream, downstream }: Indust
             Industry Chain
           </h3>
       <div className="space-y-3">
-        <ChainSection node={upstream} label="上游" />
+        <ChainSection node={upstream} label="Upstream" />
         <div className="flex justify-center">
           <ChevronRight className="w-4 h-4 text-primary rotate-90" />
         </div>
-        <ChainSection node={midstream} label="中游" />
+        <ChainSection node={midstream} label="Midstream" />
         <div className="flex justify-center">
           <ChevronRight className="w-4 h-4 text-primary rotate-90" />
         </div>
-        <ChainSection node={downstream} label="下游" />
+        <ChainSection node={downstream} label="Downstream" />
       </div>
     </Card>
   );
