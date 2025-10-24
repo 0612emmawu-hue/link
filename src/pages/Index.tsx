@@ -1,7 +1,7 @@
 import { StockCardCompact } from "@/components/StockCardCompact";
+import { PriceChartCompact } from "@/components/PriceChartCompact";
 import { IndustryChainCompact } from "@/components/IndustryChainCompact";
 import { AnalystOpinionCompact } from "@/components/AnalystOpinionCompact";
-import { PriceChartCompact } from "@/components/PriceChartCompact";
 import { AISummary } from "@/components/AISummary";
 import { MarketSegmentCompact } from "@/components/MarketSegmentCompact";
 import { FloatingNotes } from "@/components/FloatingNotes";
@@ -25,6 +25,8 @@ const Index = () => {
   const [showWatchlistDialog, setShowWatchlistDialog] = useState(false);
   const [notes, setNotes] = useState<Note[]>([]);
   const [watchlist, setWatchlist] = useState<string[]>(["AMD", "TSM"]); // TODO: Load from local storage
+  const [selectedStock, setSelectedStock] = useState<string | null>(null);
+  const [chartLoading, setChartLoading] = useState(false);
 
   // Mock data - TODO: Replace with chrome.tabs API call to get current page content
   const mockNews = {
@@ -171,6 +173,26 @@ const Index = () => {
     setWatchlist(watchlist.filter(s => s !== symbol));
     // TODO: Update local storage
   };
+
+  const handleStockClick = (symbol: string) => {
+    if (selectedStock === symbol) {
+      setSelectedStock(null);
+    } else {
+      setChartLoading(true);
+      setSelectedStock(symbol);
+      // Simulate chart data loading
+      setTimeout(() => {
+        setChartLoading(false);
+      }, 500);
+    }
+  };
+
+  const getSelectedStockData = () => {
+    const allStocks = [...autoDetectedStocks, ...userSelectedStocks];
+    return allStocks.find(stock => stock.symbol === selectedStock);
+  };
+
+  const selectedStockData = getSelectedStockData();
   return <div className="w-[420px] h-[600px] bg-background overflow-hidden flex flex-col">
       {/* Header */}
       <header className="flex-shrink-0 border-b border-border/50 bg-gradient-to-r from-card/80 to-card/40 backdrop-blur-xl">
@@ -247,21 +269,61 @@ const Index = () => {
             </h3>
             <p className="text-[10px] text-muted-foreground mb-2">Stocks detected from current news</p>
             <div className="grid grid-cols-1 gap-2">
-              {autoDetectedStocks.map(stock => <StockCardCompact key={stock.symbol} {...stock} />)}
+              {autoDetectedStocks.map(stock => (
+                <StockCardCompact 
+                  key={stock.symbol}
+                  symbol={stock.symbol}
+                  company={stock.company}
+                  price={stock.price}
+                  change={stock.change}
+                  changePercent={stock.changePercent}
+                  sector={stock.sector}
+                  isSelected={selectedStock === stock.symbol}
+                  onCardClick={() => handleStockClick(stock.symbol)}
+                />
+              ))}
             </div>
           </div>
 
           {/* User Watchlist Section */}
-          <div>
+          <div className="mb-4">
             <h3 className="text-xs font-semibold text-foreground mb-2 flex items-center gap-1.5">
               <span className="w-1 h-3 bg-primary rounded-full"></span>
               User Watchlist
             </h3>
             <p className="text-[10px] text-muted-foreground mb-2">Your manually tracked stocks</p>
             <div className="grid grid-cols-1 gap-2">
-              {userSelectedStocks.map(stock => <StockCardCompact key={stock.symbol} {...stock} />)}
+              {userSelectedStocks.map(stock => (
+                <StockCardCompact 
+                  key={stock.symbol}
+                  symbol={stock.symbol}
+                  company={stock.company}
+                  price={stock.price}
+                  change={stock.change}
+                  changePercent={stock.changePercent}
+                  sector={stock.sector}
+                  isSelected={selectedStock === stock.symbol}
+                  onCardClick={() => handleStockClick(stock.symbol)}
+                />
+              ))}
             </div>
           </div>
+
+          {/* Price Chart Section */}
+          {selectedStock && (
+            <div className="animate-slide-in-top">
+              {chartLoading ? (
+                <div className="h-48 flex items-center justify-center bg-card/30 rounded-lg border border-border/50">
+                  <p className="text-sm text-muted-foreground animate-pulse">Loading chart...</p>
+                </div>
+              ) : selectedStockData?.chartData ? (
+                <PriceChartCompact 
+                  symbol={selectedStock} 
+                  data={selectedStockData.chartData} 
+                />
+              ) : null}
+            </div>
+          )}
         </section>
 
         {/* Market Sentiment Analysis */}

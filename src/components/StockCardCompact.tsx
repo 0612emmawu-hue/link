@@ -1,7 +1,5 @@
-import { TrendingUp, TrendingDown, ChevronDown, ChevronUp } from "lucide-react";
+import { TrendingUp, TrendingDown } from "lucide-react";
 import { Card } from "@/components/ui/card";
-import { PriceChartCompact } from "./PriceChartCompact";
-import { useState } from "react";
 
 interface StockCardCompactProps {
   symbol: string;
@@ -10,33 +8,48 @@ interface StockCardCompactProps {
   change: number;
   changePercent: number;
   sector?: string;
-  chartData?: { time: string; price: number }[];
-  onClick?: () => void;
+  isSelected?: boolean;
+  onCardClick?: () => void;
+  onTitleClick?: () => void;
 }
 
-export const StockCardCompact = ({ symbol, company, price, change, changePercent, sector, chartData, onClick }: StockCardCompactProps) => {
+export const StockCardCompact = ({ 
+  symbol, 
+  company, 
+  price, 
+  change, 
+  changePercent, 
+  sector, 
+  isSelected = false,
+  onCardClick,
+  onTitleClick 
+}: StockCardCompactProps) => {
   const isPositive = change >= 0;
-  const [showChart, setShowChart] = useState(false);
 
   const handleTitleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (onClick) {
-      onClick();
+    if (onTitleClick) {
+      onTitleClick();
     } else {
-      // Default: open Yahoo Finance page for the stock
       window.open(`https://finance.yahoo.com/quote/${symbol}`, '_blank');
     }
   };
 
-  const handleSectorClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (chartData) {
-      setShowChart(!showChart);
+  const handleCardClick = () => {
+    if (onCardClick) {
+      onCardClick();
     }
   };
 
   return (
-    <Card className="p-3 bg-card/50 backdrop-blur-xl border-border/50 hover:border-primary/50 transition-all duration-300 [box-shadow:var(--shadow-neumorphic-sm)] hover:[box-shadow:var(--shadow-glow)]">
+    <Card 
+      onClick={handleCardClick}
+      className={`p-3 bg-card/50 backdrop-blur-xl border-border/50 hover:border-primary/50 transition-all duration-300 cursor-pointer ${
+        isSelected 
+          ? '[box-shadow:var(--shadow-glow)] border-primary/80' 
+          : '[box-shadow:var(--shadow-neumorphic-sm)] hover:[box-shadow:var(--shadow-glow)]'
+      }`}
+    >
       <div className="space-y-2">
         <div className="flex items-start justify-between gap-1">
           <div className="min-w-0 flex-1">
@@ -77,21 +90,9 @@ export const StockCardCompact = ({ symbol, company, price, change, changePercent
 
         {sector && (
           <div 
-            onClick={handleSectorClick}
-            className={`flex items-center justify-between text-xs px-2 py-1 rounded bg-primary/10 text-primary font-medium ${
-              chartData ? 'cursor-pointer hover:bg-primary/20' : ''
-            } transition-colors`}
+            className="flex items-center justify-between text-xs px-2 py-1 rounded bg-primary/10 text-primary font-medium transition-colors"
           >
             <span>{sector}</span>
-            {chartData && (
-              showChart ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />
-            )}
-          </div>
-        )}
-
-        {showChart && chartData && (
-          <div className="animate-slide-in-top">
-            <PriceChartCompact symbol={symbol} data={chartData} />
           </div>
         )}
       </div>
