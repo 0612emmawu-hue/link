@@ -12,7 +12,6 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { useState } from "react";
-
 interface Note {
   id: string;
   content: string;
@@ -20,7 +19,6 @@ interface Note {
   newsUrl: string;
   newsTitle: string;
 }
-
 const Index = () => {
   const [showFloatingNotes, setShowFloatingNotes] = useState(false);
   const [showNotesDashboard, setShowNotesDashboard] = useState(false);
@@ -35,97 +33,141 @@ const Index = () => {
     url: "https://bloomberg.com",
     summary: "The Federal Reserve decided to keep benchmark interest rates unchanged at its latest monetary policy meeting, in line with market expectations. The post-meeting statement indicates easing inflationary pressures and resilient economic growth.",
     timestamp: "2 hours ago",
-    sentiment: "positive" as const,
+    sentiment: "positive" as const
   };
 
   // TODO: Backend API - Auto-detect stocks from news content using RAG
-  const autoDetectedStocks = [
-    { symbol: "NVDA", company: "Nvidia", price: 875.32, change: 23.45, changePercent: 2.75, volume: "45.2M" },
-    { symbol: "MSFT", company: "Microsoft", price: 412.67, change: 8.92, changePercent: 2.21, volume: "28.7M" },
-  ];
+  const autoDetectedStocks = [{
+    symbol: "NVDA",
+    company: "Nvidia",
+    price: 875.32,
+    change: 23.45,
+    changePercent: 2.75,
+    volume: "45.2M"
+  }, {
+    symbol: "MSFT",
+    company: "Microsoft",
+    price: 412.67,
+    change: 8.92,
+    changePercent: 2.21,
+    volume: "28.7M"
+  }];
 
   // TODO: User-selected stocks stored in local storage
-  const userSelectedStocks = [
-    { symbol: "AMD", company: "AMD", price: 189.45, change: 5.23, changePercent: 2.84, volume: "52.1M" },
-    { symbol: "TSM", company: "TSMC", price: 145.78, change: 3.12, changePercent: 2.19, volume: "15.6M" },
-  ];
+  const userSelectedStocks = [{
+    symbol: "AMD",
+    company: "AMD",
+    price: 189.45,
+    change: 5.23,
+    changePercent: 2.84,
+    volume: "52.1M"
+  }, {
+    symbol: "TSM",
+    company: "TSMC",
+    price: 145.78,
+    change: 3.12,
+    changePercent: 2.19,
+    volume: "15.6M"
+  }];
 
   // TODO: Backend API - Auto-analyze industry chain from news content
   const mockIndustryChain = {
     upstream: {
       name: "Semiconductor Materials & Equipment",
-      companies: ["ASML", "Applied Materials", "Lam Research", "KLA Corp"],
+      companies: ["ASML", "Applied Materials", "Lam Research", "KLA Corp"]
     },
     midstream: {
       name: "Chip Design & Manufacturing",
-      companies: ["NVDA", "AMD", "Intel", "TSM", "Qualcomm"],
+      companies: ["NVDA", "AMD", "Intel", "TSM", "Qualcomm"]
     },
     downstream: {
       name: "AI Applications & Services",
-      companies: ["MSFT", "GOOGL", "META", "AMZN", "ORCL"],
-    },
+      companies: ["MSFT", "GOOGL", "META", "AMZN", "ORCL"]
+    }
   };
 
   // TODO: Backend API - Analyze market segments from news content
-  const mockMarketSegments = [
-    { name: "Technology", percentage: 45, color: "hsl(var(--primary))" },
-    { name: "Semiconductors", percentage: 30, color: "hsl(142 76% 45%)" },
-    { name: "AI & Cloud", percentage: 25, color: "hsl(221 83% 53%)" },
-  ];
+  const mockMarketSegments = [{
+    name: "Technology",
+    percentage: 45,
+    color: "hsl(var(--primary))"
+  }, {
+    name: "Semiconductors",
+    percentage: 30,
+    color: "hsl(142 76% 45%)"
+  }, {
+    name: "AI & Cloud",
+    percentage: 25,
+    color: "hsl(221 83% 53%)"
+  }];
 
   // TODO: Backend API - Fetch real-time stock price data
-  const mockChartData = [
-    { time: "9:30", price: 851.87 },
-    { time: "10:00", price: 855.23 },
-    { time: "10:30", price: 848.91 },
-    { time: "11:00", price: 862.45 },
-    { time: "11:30", price: 858.76 },
-    { time: "12:00", price: 865.12 },
-    { time: "12:30", price: 869.34 },
-    { time: "13:00", price: 871.89 },
-    { time: "13:30", price: 868.56 },
-    { time: "14:00", price: 875.32 },
-  ];
-
+  const mockChartData = [{
+    time: "9:30",
+    price: 851.87
+  }, {
+    time: "10:00",
+    price: 855.23
+  }, {
+    time: "10:30",
+    price: 848.91
+  }, {
+    time: "11:00",
+    price: 862.45
+  }, {
+    time: "11:30",
+    price: 858.76
+  }, {
+    time: "12:00",
+    price: 865.12
+  }, {
+    time: "12:30",
+    price: 869.34
+  }, {
+    time: "13:00",
+    price: 871.89
+  }, {
+    time: "13:30",
+    price: 868.56
+  }, {
+    time: "14:00",
+    price: 875.32
+  }];
   const handleSaveNote = (noteContent: string) => {
     const newNote: Note = {
       id: Date.now().toString(),
       content: noteContent,
       timestamp: new Date().toLocaleString(),
       newsUrl: mockNews.url,
-      newsTitle: mockNews.title,
+      newsTitle: mockNews.title
     };
     setNotes([newNote, ...notes]);
     // TODO: Save to local storage
   };
-
   const handleDeleteNote = (id: string) => {
-    setNotes(notes.filter((note) => note.id !== id));
+    setNotes(notes.filter(note => note.id !== id));
     // TODO: Update local storage
   };
-
   const handleExportNotes = () => {
     const dataStr = JSON.stringify(notes, null, 2);
-    const dataBlob = new Blob([dataStr], { type: "application/json" });
+    const dataBlob = new Blob([dataStr], {
+      type: "application/json"
+    });
     const url = URL.createObjectURL(dataBlob);
     const link = document.createElement("a");
     link.href = url;
     link.download = `notes-${Date.now()}.json`;
     link.click();
   };
-
   const handleAddToWatchlist = (symbol: string) => {
     setWatchlist([...watchlist, symbol]);
     // TODO: Save to local storage
   };
-
   const handleRemoveFromWatchlist = (symbol: string) => {
-    setWatchlist(watchlist.filter((s) => s !== symbol));
+    setWatchlist(watchlist.filter(s => s !== symbol));
     // TODO: Update local storage
   };
-
-  return (
-    <div className="w-[420px] h-[600px] bg-background overflow-hidden flex flex-col">
+  return <div className="w-[420px] h-[600px] bg-background overflow-hidden flex flex-col">
       {/* Header */}
       <header className="flex-shrink-0 border-b border-border/50 bg-gradient-to-r from-card/80 to-card/40 backdrop-blur-xl">
         <div className="px-4 py-3">
@@ -140,41 +182,19 @@ const Index = () => {
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <Button 
-                size="sm" 
-                variant="ghost" 
-                className="h-8 w-8 p-0 hover:bg-primary/10 relative"
-                onClick={() => setShowNotesDashboard(true)}
-                title="Notes Dashboard"
-              >
+              <Button size="sm" variant="ghost" className="h-8 w-8 p-0 hover:bg-primary/10 relative" onClick={() => setShowNotesDashboard(true)} title="Notes Dashboard">
                 <BookOpen className="w-4 h-4" />
-                {notes.length > 0 && (
-                  <Badge className="absolute -top-1 -right-1 h-4 w-4 p-0 flex items-center justify-center text-[10px]">
+                {notes.length > 0 && <Badge className="absolute -top-1 -right-1 h-4 w-4 p-0 flex items-center justify-center text-[10px]">
                     {notes.length}
-                  </Badge>
-                )}
+                  </Badge>}
               </Button>
-              <Button 
-                size="sm" 
-                variant="ghost" 
-                className="h-8 w-8 p-0 hover:bg-primary/10 relative"
-                onClick={() => setShowWatchlistDialog(true)}
-                title="Manage Watchlist"
-              >
+              <Button size="sm" variant="ghost" className="h-8 w-8 p-0 hover:bg-primary/10 relative" onClick={() => setShowWatchlistDialog(true)} title="Manage Watchlist">
                 <Eye className="w-4 h-4" />
-                {watchlist.length > 0 && (
-                  <Badge className="absolute -top-1 -right-1 h-4 w-4 p-0 flex items-center justify-center text-[10px]">
+                {watchlist.length > 0 && <Badge className="absolute -top-1 -right-1 h-4 w-4 p-0 flex items-center justify-center text-[10px]">
                     {watchlist.length}
-                  </Badge>
-                )}
+                  </Badge>}
               </Button>
-              <Button 
-                size="sm" 
-                variant="ghost" 
-                className="h-8 w-8 p-0 hover:bg-primary/10"
-                onClick={() => setShowFloatingNotes(true)}
-                title="Quick Notes"
-              >
+              <Button size="sm" variant="ghost" className="h-8 w-8 p-0 hover:bg-primary/10" onClick={() => setShowFloatingNotes(true)} title="Quick Notes">
                 <Plus className="w-4 h-4" />
               </Button>
             </div>
@@ -222,9 +242,7 @@ const Index = () => {
           <div className="mb-3">
             <p className="text-xs text-muted-foreground mb-2">Auto-detected from news:</p>
             <div className="grid grid-cols-2 gap-2">
-              {autoDetectedStocks.map((stock) => (
-                <StockCardCompact key={stock.symbol} {...stock} />
-              ))}
+              {autoDetectedStocks.map(stock => <StockCardCompact key={stock.symbol} {...stock} />)}
             </div>
           </div>
 
@@ -232,9 +250,7 @@ const Index = () => {
           <div>
             <p className="text-xs text-muted-foreground mb-2">Your watchlist:</p>
             <div className="grid grid-cols-2 gap-2">
-              {userSelectedStocks.map((stock) => (
-                <StockCardCompact key={stock.symbol} {...stock} />
-              ))}
+              {userSelectedStocks.map(stock => <StockCardCompact key={stock.symbol} {...stock} />)}
             </div>
           </div>
         </section>
@@ -256,41 +272,20 @@ const Index = () => {
         {/* Disclaimer */}
         <section>
           <Card className="p-3 bg-warning/5 border-warning/20">
-            <p className="text-xs text-muted-foreground text-center leading-relaxed">
-              ⚠️ This extension provides information only, not investment advice
-            </p>
+            <p className="text-xs text-muted-foreground text-center leading-relaxed">⚠️ This extension provides information only, 
+not investment advice</p>
           </Card>
         </section>
       </main>
 
       {/* Floating Notes Panel */}
-      {showFloatingNotes && (
-        <FloatingNotes 
-          onClose={() => setShowFloatingNotes(false)}
-          onSave={handleSaveNote}
-        />
-      )}
+      {showFloatingNotes && <FloatingNotes onClose={() => setShowFloatingNotes(false)} onSave={handleSaveNote} />}
 
       {/* Notes Dashboard */}
-      {showNotesDashboard && (
-        <NotesDashboard
-          notes={notes}
-          onClose={() => setShowNotesDashboard(false)}
-          onDelete={handleDeleteNote}
-          onExport={handleExportNotes}
-        />
-      )}
+      {showNotesDashboard && <NotesDashboard notes={notes} onClose={() => setShowNotesDashboard(false)} onDelete={handleDeleteNote} onExport={handleExportNotes} />}
 
       {/* Watchlist Dialog */}
-      <WatchlistDialog
-        open={showWatchlistDialog}
-        onClose={() => setShowWatchlistDialog(false)}
-        watchlist={watchlist}
-        onAddStock={handleAddToWatchlist}
-        onRemoveStock={handleRemoveFromWatchlist}
-      />
-    </div>
-  );
+      <WatchlistDialog open={showWatchlistDialog} onClose={() => setShowWatchlistDialog(false)} watchlist={watchlist} onAddStock={handleAddToWatchlist} onRemoveStock={handleRemoveFromWatchlist} />
+    </div>;
 };
-
 export default Index;
