@@ -22,12 +22,27 @@ export const IndustryChainCompact = ({ upstream, midstream, downstream }: Indust
 
     return (
       <div className="space-y-2">
-        <Badge variant="outline" className="bg-primary/10 text-primary border-primary/30 text-xs">
-          {label}
-        </Badge>
+        <div className="flex items-center justify-between gap-2">
+          <Badge variant="outline" className="bg-primary/10 text-primary border-primary/30 text-xs">
+            {label}
+          </Badge>
+          {hasMore && (
+            <button
+              onClick={() => setIsExpanded(!isExpanded)}
+              className="group p-1 rounded hover:bg-primary/10 transition-all duration-200"
+              aria-label={isExpanded ? "Collapse" : "Expand"}
+            >
+              <ChevronDown 
+                className={`w-4 h-4 text-primary transition-all duration-300 group-hover:text-primary-glow ${
+                  isExpanded ? 'rotate-180' : 'rotate-0'
+                }`}
+              />
+            </button>
+          )}
+        </div>
         <div className="space-y-1">
           <p className="text-xs font-semibold text-foreground">{node.name}</p>
-          <div className="flex flex-wrap gap-1">
+          <div className="flex flex-wrap gap-1 transition-all duration-250 ease-out">
             {displayedCompanies.map((company, idx) => (
               <Badge 
                 key={idx}
@@ -37,23 +52,12 @@ export const IndustryChainCompact = ({ upstream, midstream, downstream }: Indust
                 {company}
               </Badge>
             ))}
-            {hasMore && (
+            {hasMore && !isExpanded && (
               <Badge 
                 variant="secondary" 
-                className="text-xs py-0 cursor-pointer hover:bg-secondary/80 transition-colors flex items-center gap-0.5"
-                onClick={() => setIsExpanded(!isExpanded)}
+                className="text-xs py-0 text-muted-foreground"
               >
-                {isExpanded ? (
-                  <>
-                    Show less
-                    <ChevronDown className="w-3 h-3 rotate-180" />
-                  </>
-                ) : (
-                  <>
-                    +{node.companies.length - 3}
-                    <ChevronDown className="w-3 h-3" />
-                  </>
-                )}
+                +{node.companies.length - 3}
               </Badge>
             )}
           </div>
