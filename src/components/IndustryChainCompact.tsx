@@ -77,7 +77,7 @@ export const IndustryChainCompact = ({ upstream, midstream, downstream }: Indust
             <span className="w-0.5 h-4 bg-gradient-primary rounded-full"></span>
             Industry Chain
           </h3>
-      <div className="space-y-3">
+      <div className="space-y-0">
         <ChainSection node={upstream} label="Upstream" showArrowBelow />
         <ChainSection node={midstream} label="Midstream" showArrowBelow />
         <ChainSection node={downstream} label="Downstream" showArrowBelow />
