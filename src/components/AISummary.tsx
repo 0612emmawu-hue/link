@@ -1,15 +1,17 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Sparkles, Languages, Loader2 } from "lucide-react";
+import { Sparkles, Languages, Loader2, Clock } from "lucide-react";
 import { useState, useEffect } from "react";
 
 interface AISummaryProps {
   newsTitle: string;
   newsContent: string;
+  sourceName?: string;
+  publishTime?: string;
 }
 
-export const AISummary = ({ newsTitle, newsContent }: AISummaryProps) => {
+export const AISummary = ({ newsTitle, newsContent, sourceName = "News Source", publishTime = "2 hours ago" }: AISummaryProps) => {
   const [selectedLanguage, setSelectedLanguage] = useState("en");
   const [summary, setSummary] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -70,6 +72,22 @@ export const AISummary = ({ newsTitle, newsContent }: AISummaryProps) => {
             <Sparkles className="w-4 h-4 text-primary" />
             AI Summary
           </h3>
+        </div>
+
+        {/* News Title */}
+        <div>
+          <h2 className="text-base font-bold text-foreground leading-tight">
+            {newsTitle}
+          </h2>
+        </div>
+
+        {/* Source and Time */}
+        <div className="flex items-center gap-3 text-xs text-muted-foreground">
+          <span className="font-medium">{sourceName}</span>
+          <span className="flex items-center gap-1">
+            <Clock className="w-3 h-3" />
+            {publishTime}
+          </span>
         </div>
 
         {isLoading ? (
