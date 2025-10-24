@@ -80,7 +80,7 @@ export const IndustryChainCompact = ({ upstream, midstream, downstream }: Indust
       <div className="space-y-0">
         <ChainSection node={upstream} label="Upstream" showArrowBelow />
         <ChainSection node={midstream} label="Midstream" showArrowBelow />
-        <ChainSection node={downstream} label="Downstream" />
+        <ChainSection node={downstream} label="Downstream" showArrowBelow />
       </div>
     </Card>
   );
