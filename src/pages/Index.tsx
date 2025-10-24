@@ -205,7 +205,7 @@ const Index = () => {
               </div>
               <div>
                 <h1 className="text-sm font-bold text-foreground">Market Insight AI</h1>
-                <p className="text-xs text-muted-foreground">AI-Powered Insights</p>
+                <p className="text-xs text-muted-foreground">News • Trends • Analysis</p>
               </div>
             </div>
             <div className="flex items-center gap-2">
