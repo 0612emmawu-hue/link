@@ -206,10 +206,7 @@ const Index = () => {
       <main className="flex-1 overflow-y-auto px-4 py-4 space-y-4 scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent">
         {/* Module 1: News Summary (AI Summary) */}
         <section>
-          <h2 className="text-xs font-semibold text-primary mb-2 uppercase tracking-wider flex items-center gap-1.5">
-            <span className="w-1 h-1 rounded-full bg-primary animate-pulse"></span>
-            AI Summary
-          </h2>
+          
           <AISummary newsTitle={mockNews.title} newsContent={mockNews.summary} />
         </section>
 
