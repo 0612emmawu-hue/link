@@ -6,6 +6,7 @@ import { AISummary } from "@/components/AISummary";
 import { MarketSegmentCompact } from "@/components/MarketSegmentCompact";
 import { FloatingNotes } from "@/components/FloatingNotes";
 import { NotesDashboard } from "@/components/NotesDashboard";
+import { WatchlistDialog } from "@/components/WatchlistDialog";
 import { Sparkles, BookOpen, Plus, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -23,8 +24,9 @@ interface Note {
 const Index = () => {
   const [showFloatingNotes, setShowFloatingNotes] = useState(false);
   const [showNotesDashboard, setShowNotesDashboard] = useState(false);
+  const [showWatchlistDialog, setShowWatchlistDialog] = useState(false);
   const [notes, setNotes] = useState<Note[]>([]);
-  const [customStocks, setCustomStocks] = useState<string[]>([]);
+  const [watchlist, setWatchlist] = useState<string[]>(["AMD", "TSM"]); // TODO: Load from local storage
 
   // Mock data - TODO: Replace with chrome.tabs API call to get current page content
   const mockNews = {
@@ -112,6 +114,16 @@ const Index = () => {
     link.click();
   };
 
+  const handleAddToWatchlist = (symbol: string) => {
+    setWatchlist([...watchlist, symbol]);
+    // TODO: Save to local storage
+  };
+
+  const handleRemoveFromWatchlist = (symbol: string) => {
+    setWatchlist(watchlist.filter((s) => s !== symbol));
+    // TODO: Update local storage
+  };
+
   return (
     <div className="w-[420px] h-[600px] bg-background overflow-hidden flex flex-col">
       {/* Header */}
@@ -145,11 +157,16 @@ const Index = () => {
               <Button 
                 size="sm" 
                 variant="ghost" 
-                className="h-8 w-8 p-0 hover:bg-primary/10"
-                onClick={() => {/* TODO: Add watchlist management */}}
+                className="h-8 w-8 p-0 hover:bg-primary/10 relative"
+                onClick={() => setShowWatchlistDialog(true)}
                 title="Manage Watchlist"
               >
                 <Eye className="w-4 h-4" />
+                {watchlist.length > 0 && (
+                  <Badge className="absolute -top-1 -right-1 h-4 w-4 p-0 flex items-center justify-center text-[10px]">
+                    {watchlist.length}
+                  </Badge>
+                )}
               </Button>
               <Button 
                 size="sm" 
@@ -263,6 +280,15 @@ const Index = () => {
           onExport={handleExportNotes}
         />
       )}
+
+      {/* Watchlist Dialog */}
+      <WatchlistDialog
+        open={showWatchlistDialog}
+        onClose={() => setShowWatchlistDialog(false)}
+        watchlist={watchlist}
+        onAddStock={handleAddToWatchlist}
+        onRemoveStock={handleRemoveFromWatchlist}
+      />
     </div>
   );
 };
