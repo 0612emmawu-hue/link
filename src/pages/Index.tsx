@@ -36,71 +36,6 @@ const Index = () => {
     sentiment: "positive" as const
   };
 
-  // TODO: Backend API - Auto-detect stocks from news content using RAG
-  const autoDetectedStocks = [{
-    symbol: "NVDA",
-    company: "Nvidia",
-    price: 875.32,
-    change: 23.45,
-    changePercent: 2.75,
-    volume: "45.2M"
-  }, {
-    symbol: "MSFT",
-    company: "Microsoft",
-    price: 412.67,
-    change: 8.92,
-    changePercent: 2.21,
-    volume: "28.7M"
-  }];
-
-  // TODO: User-selected stocks stored in local storage
-  const userSelectedStocks = [{
-    symbol: "AMD",
-    company: "AMD",
-    price: 189.45,
-    change: 5.23,
-    changePercent: 2.84,
-    volume: "52.1M"
-  }, {
-    symbol: "TSM",
-    company: "TSMC",
-    price: 145.78,
-    change: 3.12,
-    changePercent: 2.19,
-    volume: "15.6M"
-  }];
-
-  // TODO: Backend API - Auto-analyze industry chain from news content
-  const mockIndustryChain = {
-    upstream: {
-      name: "Semiconductor Materials & Equipment",
-      companies: ["ASML", "Applied Materials", "Lam Research", "KLA Corp"]
-    },
-    midstream: {
-      name: "Chip Design & Manufacturing",
-      companies: ["NVDA", "AMD", "Intel", "TSM", "Qualcomm"]
-    },
-    downstream: {
-      name: "AI Applications & Services",
-      companies: ["MSFT", "GOOGL", "META", "AMZN", "ORCL"]
-    }
-  };
-
-  // TODO: Backend API - Analyze market segments from news content
-  const mockMarketSegments = [{
-    name: "Technology",
-    percentage: 45,
-    color: "hsl(var(--primary))"
-  }, {
-    name: "Semiconductors",
-    percentage: 30,
-    color: "hsl(142 76% 45%)"
-  }, {
-    name: "AI & Cloud",
-    percentage: 25,
-    color: "hsl(221 83% 53%)"
-  }];
-
   // TODO: Backend API - Fetch real-time stock price data
   const mockChartData = [{
     time: "9:30",
@@ -132,6 +67,75 @@ const Index = () => {
   }, {
     time: "14:00",
     price: 875.32
+  }];
+
+  // TODO: Backend API - Auto-detect stocks from news content using RAG
+  const autoDetectedStocks = [{
+    symbol: "NVDA",
+    company: "Nvidia",
+    price: 875.32,
+    change: 23.45,
+    changePercent: 2.75,
+    sector: "Technology",
+    chartData: mockChartData
+  }, {
+    symbol: "MSFT",
+    company: "Microsoft",
+    price: 412.67,
+    change: 8.92,
+    changePercent: 2.21,
+    sector: "Technology",
+    chartData: mockChartData
+  }];
+
+  // TODO: User-selected stocks stored in local storage
+  const userSelectedStocks = [{
+    symbol: "AMD",
+    company: "AMD",
+    price: 189.45,
+    change: 5.23,
+    changePercent: 2.84,
+    sector: "Semiconductors",
+    chartData: mockChartData
+  }, {
+    symbol: "TSM",
+    company: "TSMC",
+    price: 145.78,
+    change: 3.12,
+    changePercent: 2.19,
+    sector: "Semiconductors",
+    chartData: mockChartData
+  }];
+
+  // TODO: Backend API - Auto-analyze industry chain from news content
+  const mockIndustryChain = {
+    upstream: {
+      name: "Semiconductor Materials & Equipment",
+      companies: ["ASML", "Applied Materials", "Lam Research", "KLA Corp"]
+    },
+    midstream: {
+      name: "Chip Design & Manufacturing",
+      companies: ["NVDA", "AMD", "Intel", "TSM", "Qualcomm"]
+    },
+    downstream: {
+      name: "AI Applications & Services",
+      companies: ["MSFT", "GOOGL", "META", "AMZN", "ORCL"]
+    }
+  };
+
+  // TODO: Backend API - Analyze market segments from news content
+  const mockMarketSegments = [{
+    name: "Technology",
+    percentage: 45,
+    color: "hsl(var(--primary))"
+  }, {
+    name: "Semiconductors",
+    percentage: 30,
+    color: "hsl(142 76% 45%)"
+  }, {
+    name: "AI & Cloud",
+    percentage: 25,
+    color: "hsl(221 83% 53%)"
   }];
   const handleSaveNote = (noteContent: string) => {
     const newNote: Note = {
@@ -230,31 +234,34 @@ const Index = () => {
 
         {/* Module 4: Stock Tracker */}
         <section>
-          <h2 className="text-xs font-semibold text-primary mb-2 uppercase tracking-wider flex items-center gap-1.5">
+          <h2 className="text-xs font-semibold text-primary mb-3 uppercase tracking-wider flex items-center gap-1.5">
             <span className="w-1 h-1 rounded-full bg-primary animate-pulse"></span>
             Stock Tracker
           </h2>
           
-          {/* Auto-detected stocks */}
-          <div className="mb-3">
-            <p className="text-xs text-muted-foreground mb-2">Auto-detected from news:</p>
-            <div className="grid grid-cols-2 gap-2">
+          {/* Auto Tracking Section */}
+          <div className="mb-4">
+            <h3 className="text-xs font-semibold text-foreground mb-2 flex items-center gap-1.5">
+              <span className="w-1 h-3 bg-primary rounded-full"></span>
+              Auto Tracking
+            </h3>
+            <p className="text-[10px] text-muted-foreground mb-2">Stocks detected from current news</p>
+            <div className="grid grid-cols-1 gap-2">
               {autoDetectedStocks.map(stock => <StockCardCompact key={stock.symbol} {...stock} />)}
             </div>
           </div>
 
-          {/* User-selected stocks */}
+          {/* User Watchlist Section */}
           <div>
-            <p className="text-xs text-muted-foreground mb-2">Your watchlist:</p>
-            <div className="grid grid-cols-2 gap-2">
+            <h3 className="text-xs font-semibold text-foreground mb-2 flex items-center gap-1.5">
+              <span className="w-1 h-3 bg-primary rounded-full"></span>
+              User Watchlist
+            </h3>
+            <p className="text-[10px] text-muted-foreground mb-2">Your manually tracked stocks</p>
+            <div className="grid grid-cols-1 gap-2">
               {userSelectedStocks.map(stock => <StockCardCompact key={stock.symbol} {...stock} />)}
             </div>
           </div>
-        </section>
-
-        {/* Price Chart */}
-        <section>
-          <PriceChartCompact symbol="NVDA" data={mockChartData} />
         </section>
 
         {/* Market Sentiment Analysis */}

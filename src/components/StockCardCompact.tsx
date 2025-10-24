@@ -1,5 +1,7 @@
-import { TrendingUp, TrendingDown } from "lucide-react";
+import { TrendingUp, TrendingDown, ChevronDown, ChevronUp } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import { PriceChartCompact } from "./PriceChartCompact";
+import { useState } from "react";
 
 interface StockCardCompactProps {
   symbol: string;
@@ -7,13 +9,17 @@ interface StockCardCompactProps {
   price: number;
   change: number;
   changePercent: number;
+  sector?: string;
+  chartData?: { time: string; price: number }[];
   onClick?: () => void;
 }
 
-export const StockCardCompact = ({ symbol, company, price, change, changePercent, onClick }: StockCardCompactProps) => {
+export const StockCardCompact = ({ symbol, company, price, change, changePercent, sector, chartData, onClick }: StockCardCompactProps) => {
   const isPositive = change >= 0;
+  const [showChart, setShowChart] = useState(false);
 
-  const handleClick = () => {
+  const handleTitleClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
     if (onClick) {
       onClick();
     } else {
@@ -22,15 +28,22 @@ export const StockCardCompact = ({ symbol, company, price, change, changePercent
     }
   };
 
+  const handleSectorClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (chartData) {
+      setShowChart(!showChart);
+    }
+  };
+
   return (
-    <Card 
-      onClick={handleClick}
-      className="p-3 bg-card/50 backdrop-blur-xl border-border/50 hover:border-primary/50 transition-all duration-300 cursor-pointer group [box-shadow:var(--shadow-neumorphic-sm)] hover:[box-shadow:var(--shadow-glow)]"
-    >
+    <Card className="p-3 bg-card/50 backdrop-blur-xl border-border/50 hover:border-primary/50 transition-all duration-300 [box-shadow:var(--shadow-neumorphic-sm)] hover:[box-shadow:var(--shadow-glow)]">
       <div className="space-y-2">
         <div className="flex items-start justify-between gap-1">
           <div className="min-w-0 flex-1">
-            <h3 className="text-sm font-bold text-foreground group-hover:text-primary transition-colors truncate">
+            <h3 
+              onClick={handleTitleClick}
+              className="text-sm font-bold text-foreground hover:text-primary transition-colors truncate cursor-pointer"
+            >
               {symbol}
             </h3>
             <p className="text-xs text-muted-foreground truncate">
@@ -61,6 +74,26 @@ export const StockCardCompact = ({ symbol, company, price, change, changePercent
             {change > 0 ? '+' : ''}{change.toFixed(2)}
           </span>
         </div>
+
+        {sector && (
+          <div 
+            onClick={handleSectorClick}
+            className={`flex items-center justify-between text-xs px-2 py-1 rounded bg-primary/10 text-primary font-medium ${
+              chartData ? 'cursor-pointer hover:bg-primary/20' : ''
+            } transition-colors`}
+          >
+            <span>{sector}</span>
+            {chartData && (
+              showChart ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />
+            )}
+          </div>
+        )}
+
+        {showChart && chartData && (
+          <div className="animate-slide-in-top">
+            <PriceChartCompact symbol={symbol} data={chartData} />
+          </div>
+        )}
       </div>
     </Card>
   );
