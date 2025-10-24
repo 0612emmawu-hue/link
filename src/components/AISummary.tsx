@@ -67,13 +67,6 @@ export const AISummary = ({ newsTitle, newsContent, sourceName = "News Source", 
   return (
     <Card className="p-4 bg-card/50 backdrop-blur-xl border-border/50 shadow-card">
       <div className="space-y-3">
-        <div className="flex items-center justify-between">
-          <h3 className="text-sm font-bold text-foreground flex items-center gap-2">
-            <Sparkles className="w-4 h-4 text-primary" />
-            AI Summary
-          </h3>
-        </div>
-
         {/* News Title */}
         <div>
           <h2 className="text-base font-bold text-foreground leading-tight">
