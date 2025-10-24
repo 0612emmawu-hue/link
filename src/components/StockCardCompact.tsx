@@ -44,32 +44,32 @@ export const StockCardCompact = ({
   return (
     <Card 
       onClick={handleCardClick}
-      className={`p-3 bg-card/50 backdrop-blur-xl border-border/50 hover:border-primary/50 transition-all duration-300 cursor-pointer ${
+      className={`p-2 bg-card/50 backdrop-blur-xl border-border/50 hover:border-primary/50 transition-all duration-300 cursor-pointer ${
         isSelected 
           ? '[box-shadow:var(--shadow-glow)] border-primary/80' 
           : '[box-shadow:var(--shadow-neumorphic-sm)] hover:[box-shadow:var(--shadow-glow)]'
       }`}
     >
-      <div className="space-y-2">
+      <div className="space-y-1.5">
         <div className="flex items-start justify-between gap-1">
           <div className="min-w-0 flex-1">
             <h3 
               onClick={handleTitleClick}
-              className="text-sm font-bold text-foreground hover:text-primary transition-colors truncate cursor-pointer"
+              className="text-xs font-bold text-foreground hover:text-primary transition-colors truncate cursor-pointer leading-tight"
             >
               {symbol}
             </h3>
-            <p className="text-xs text-muted-foreground truncate">
+            <p className="text-[10px] text-muted-foreground truncate leading-tight">
               {company}
             </p>
           </div>
-          <div className={`flex items-center gap-0.5 px-1.5 py-0.5 rounded text-xs font-semibold flex-shrink-0 ${
+          <div className={`flex items-center gap-0.5 px-1 py-0.5 rounded text-[10px] font-semibold flex-shrink-0 ${
             isPositive ? 'bg-bullish/10 text-bullish' : 'bg-bearish/10 text-bearish'
           }`}>
             {isPositive ? (
-              <TrendingUp className="w-3 h-3" />
+              <TrendingUp className="w-2.5 h-2.5" />
             ) : (
-              <TrendingDown className="w-3 h-3" />
+              <TrendingDown className="w-2.5 h-2.5" />
             )}
             <span>
               {changePercent > 0 ? '+' : ''}{changePercent.toFixed(1)}%
@@ -77,11 +77,11 @@ export const StockCardCompact = ({
           </div>
         </div>
         
-        <div className="flex items-baseline gap-1">
-          <span className="text-lg font-bold text-foreground">
+        <div className="flex items-baseline justify-between">
+          <span className="text-base font-bold text-foreground leading-tight">
             ${price.toFixed(2)}
           </span>
-          <span className={`text-xs font-medium ${
+          <span className={`text-[10px] font-medium ${
             isPositive ? 'text-bullish' : 'text-bearish'
           }`}>
             {change > 0 ? '+' : ''}{change.toFixed(2)}
@@ -90,7 +90,7 @@ export const StockCardCompact = ({
 
         {sector && (
           <div 
-            className="flex items-center justify-between text-xs px-2 py-1 rounded bg-primary/10 text-primary font-medium transition-colors"
+            className="inline-flex items-center text-[10px] px-1.5 py-0.5 rounded bg-primary/10 text-primary font-medium transition-colors"
           >
             <span>{sector}</span>
           </div>

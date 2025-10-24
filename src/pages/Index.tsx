@@ -262,13 +262,13 @@ const Index = () => {
           </h2>
           
           {/* Auto Tracking Section */}
-          <div className="mb-4">
-            <h3 className="text-xs font-semibold text-foreground mb-2 flex items-center gap-1.5">
-              <span className="w-1 h-3 bg-primary rounded-full"></span>
+          <div className="mb-3">
+            <h3 className="text-[10px] font-semibold text-foreground mb-1.5 flex items-center gap-1">
+              <span className="w-0.5 h-2.5 bg-primary rounded-full"></span>
               Auto Tracking
             </h3>
-            <p className="text-[10px] text-muted-foreground mb-2">Stocks detected from current news</p>
-            <div className="grid grid-cols-1 gap-2">
+            <p className="text-[9px] text-muted-foreground mb-1.5">Stocks detected from current news</p>
+            <div className="grid grid-cols-2 gap-2">
               {autoDetectedStocks.map(stock => (
                 <StockCardCompact 
                   key={stock.symbol}
@@ -286,13 +286,13 @@ const Index = () => {
           </div>
 
           {/* User Watchlist Section */}
-          <div className="mb-4">
-            <h3 className="text-xs font-semibold text-foreground mb-2 flex items-center gap-1.5">
-              <span className="w-1 h-3 bg-primary rounded-full"></span>
+          <div className="mb-3">
+            <h3 className="text-[10px] font-semibold text-foreground mb-1.5 flex items-center gap-1">
+              <span className="w-0.5 h-2.5 bg-primary rounded-full"></span>
               User Watchlist
             </h3>
-            <p className="text-[10px] text-muted-foreground mb-2">Your manually tracked stocks</p>
-            <div className="grid grid-cols-1 gap-2">
+            <p className="text-[9px] text-muted-foreground mb-1.5">Your manually tracked stocks</p>
+            <div className="grid grid-cols-2 gap-2">
               {userSelectedStocks.map(stock => (
                 <StockCardCompact 
                   key={stock.symbol}
@@ -311,10 +311,10 @@ const Index = () => {
 
           {/* Price Chart Section */}
           {selectedStock && (
-            <div className="animate-slide-in-top">
+            <div className="animate-slide-in-top mt-2">
               {chartLoading ? (
-                <div className="h-48 flex items-center justify-center bg-card/30 rounded-lg border border-border/50">
-                  <p className="text-sm text-muted-foreground animate-pulse">Loading chart...</p>
+                <div className="h-40 flex items-center justify-center bg-card/30 rounded-lg border border-border/50">
+                  <p className="text-xs text-muted-foreground animate-pulse">Loading chart...</p>
                 </div>
               ) : selectedStockData?.chartData ? (
                 <PriceChartCompact 
