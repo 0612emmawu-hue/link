@@ -77,6 +77,72 @@ All colors MUST be HSL.
     /* Transitions */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
+
+  .light {
+    /* Light theme - white background */
+    --background: 0 0% 100%;
+    --foreground: 229 32% 10%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 229 32% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 229 32% 10%;
+
+    /* Primary: blue-purple gradient anchor */
+    --primary: 246 70% 58%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 246 80% 68%;
+
+    /* Secondary: light muted */
+    --secondary: 229 25% 95%;
+    --secondary-foreground: 229 32% 10%;
+
+    /* Muted states */
+    --muted: 229 20% 96%;
+    --muted-foreground: 215 20% 40%;
+
+    /* Accent: lighter purple */
+    --accent: 263 70% 60%;
+    --accent-foreground: 0 0% 100%;
+
+    /* Financial specific colors */
+    --bullish: 142 76% 36%;
+    --bullish-foreground: 0 0% 100%;
+    --bearish: 0 84% 50%;
+    --bearish-foreground: 0 0% 100%;
+    --warning: 45 93% 48%;
+    --warning-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 229 20% 88%;
+    --input: 229 20% 92%;
+    --ring: 246 70% 58%;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(246 70% 58%), hsl(263 70% 60%));
+    --gradient-success: linear-gradient(135deg, hsl(142 76% 36%), hsl(142 76% 46%));
+    --gradient-danger: linear-gradient(135deg, hsl(0 84% 50%), hsl(0 84% 40%));
+    --gradient-glass: linear-gradient(135deg, hsla(0 0% 100% / 0.9), hsla(0 0% 100% / 0.7));
+
+    /* Shadows */
+    --shadow-card: 0 8px 32px hsla(246 70% 58% / 0.08);
+    --shadow-glow: 0 0 24px hsla(246 80% 68% / 0.2);
+    --shadow-elevation: 0 4px 16px hsla(0 0% 0% / 0.1);
+    
+    /* Neomorphic shadows */
+    --shadow-neumorphic: 
+      8px 8px 16px hsla(229 32% 85% / 0.6),
+      -8px -8px 16px hsla(0 0% 100% / 0.8);
+    --shadow-neumorphic-inset: 
+      inset 4px 4px 8px hsla(229 32% 85% / 0.5),
+      inset -4px -4px 8px hsla(0 0% 100% / 0.6);
+    --shadow-neumorphic-sm: 
+      4px 4px 8px hsla(229 32% 85% / 0.4),
+      -4px -4px 8px hsla(0 0% 100% / 0.6);
+  }
 }
 
 @layer base {

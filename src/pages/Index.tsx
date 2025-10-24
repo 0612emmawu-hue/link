@@ -7,6 +7,7 @@ import { MarketSegmentCompact } from "@/components/MarketSegmentCompact";
 import { FloatingNotes } from "@/components/FloatingNotes";
 import { NotesDashboard } from "@/components/NotesDashboard";
 import { WatchlistDialog } from "@/components/WatchlistDialog";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { Sparkles, BookOpen, Plus, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -208,6 +209,7 @@ const Index = () => {
               </div>
             </div>
             <div className="flex items-center gap-2">
+              <ThemeToggle />
               <Button size="sm" variant="ghost" className="h-8 w-8 p-0 hover:bg-primary/10 relative" onClick={() => setShowNotesDashboard(true)} title="Notes Dashboard">
                 <BookOpen className="w-4 h-4" />
                 {notes.length > 0 && <Badge className="absolute -top-1 -right-1 h-4 w-4 p-0 flex items-center justify-center text-[10px]">
