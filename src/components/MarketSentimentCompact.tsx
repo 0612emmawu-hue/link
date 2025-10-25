@@ -26,22 +26,22 @@ export const MarketSentimentCompact = ({ items, type }: MarketSentimentCompactPr
   const getSentimentBarColor = (sentiment: string) => {
     switch (sentiment) {
       case "positive":
-        return "from-[#5562FF] to-[#6E77FF]";
+        return "from-bullish to-bullish";
       case "negative":
-        return "from-[#FF5E5E] to-[#FF5E5E]";
+        return "from-bearish to-bearish";
       default:
-        return "from-[#9BA3AF] to-[#9BA3AF]";
+        return "from-warning to-warning";
     }
   };
 
   const getSentimentTextColor = (sentiment: string) => {
     switch (sentiment) {
       case "positive":
-        return "text-[#6E77FF]";
+        return "text-bullish";
       case "negative":
-        return "text-[#FF5E5E]";
+        return "text-bearish";
       default:
-        return "text-[#9BA3AF]";
+        return "text-warning";
     }
   };
 
