@@ -385,8 +385,7 @@ const Index = () => {
 
         {/* Module 3: Overall Market Sentiment */}
         <section>
-          <h3 className="text-xs font-semibold text-primary mb-2 uppercase tracking-wider flex items-center gap-1.5">
-            <span className="w-1 h-1 rounded-full bg-primary animate-pulse"></span>
+          <h3 className="text-base font-semibold text-foreground mb-2 uppercase tracking-wider">
             Overall Market Sentiment
           </h3>
 
