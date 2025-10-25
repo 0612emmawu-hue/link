@@ -267,14 +267,6 @@ const Index = () => {
           <MarketSentimentCompact {...mockMarketSentiment} />
         </section>
 
-        {/* Module 3: Market Segment */}
-        <section>
-          <h2 className="text-xs font-semibold text-primary mb-2 uppercase tracking-wider flex items-center gap-1.5">
-            <span className="w-1 h-1 rounded-full bg-primary animate-pulse"></span>
-            Market Segment
-          </h2>
-          <MarketSegmentCompact segments={mockMarketSegments} />
-        </section>
 
         {/* Module 4: Stock Tracker */}
         <section>
@@ -348,14 +340,6 @@ const Index = () => {
           )}
         </section>
 
-        {/* Market Sentiment Analysis */}
-        <section>
-          <h2 className="text-xs font-semibold text-primary mb-2 uppercase tracking-wider flex items-center gap-1.5">
-            <span className="w-1 h-1 rounded-full bg-primary animate-pulse"></span>
-            Market Sentiment
-          </h2>
-          <AnalystOpinionCompact buy={18} hold={5} sell={2} />
-        </section>
 
         {/* Disclaimer */}
         <section>
