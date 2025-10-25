@@ -30,7 +30,7 @@ export const IndustryChainCompact = ({
     const hasMore = node.companies.length > 3;
     return <>
         <div className="space-y-2">
-          <Badge variant="outline" className="bg-primary/10 text-primary border-primary/30 text-xs">
+          <Badge variant="outline" className="bg-primary/10 text-primary border-primary/30 text-xs rounded-md">
             {label}
           </Badge>
           <div className="space-y-1">
