@@ -393,7 +393,7 @@ const Index = () => {
               <p className="text-xs text-muted-foreground animate-pulse">Loading market sentiment...</p>
             </div> : marketSentiment ? <div className="animate-fade-in">
               {marketSentiment.type === "industry" && <p className="text-[9px] text-muted-foreground mb-2">Industry-level analysis</p>}
-              {marketSentiment.type === "company" && <p className="text-[9px] text-muted-foreground mb-2">Company-level analysis</p>}
+              {marketSentiment.type === "company" && <p className="text-muted-foreground mb-2 text-xs font-semibold">Company-level analysis</p>}
               <MarketSentimentCompact {...marketSentiment} />
             </div> : null}
         </section>
