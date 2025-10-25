@@ -16,14 +16,16 @@ export const IndustryChainCompact = ({
 }: IndustryChainCompactProps) => {
   const ChainSection = ({
     node,
-    label
+    label,
+    colorClass
   }: {
     node: ChainNode;
     label: string;
+    colorClass: string;
   }) => {
     return <>
         <div className="space-y-2">
-          <Badge variant="outline" className="bg-primary/10 text-primary border-primary/30 text-xs">
+          <Badge variant="outline" className={`${colorClass} text-xs`}>
             {label}
           </Badge>
           <div className="space-y-1">
@@ -40,9 +42,9 @@ export const IndustryChainCompact = ({
   return <Card className="p-4 bg-gradient-to-br from-card/80 to-card/40 backdrop-blur-xl border-border/50 shadow-card">
           
       <div className="space-y-3">
-        <ChainSection node={upstream} label="Upstream" />
-        <ChainSection node={midstream} label="Midstream" />
-        <ChainSection node={downstream} label="Downstream" />
+        <ChainSection node={upstream} label="Upstream" colorClass="bg-blue-500/10 text-blue-500 border-blue-500/30" />
+        <ChainSection node={midstream} label="Midstream" colorClass="bg-purple-500/10 text-purple-500 border-purple-500/30" />
+        <ChainSection node={downstream} label="Downstream" colorClass="bg-green-500/10 text-green-500 border-green-500/30" />
       </div>
     </Card>;
 };
