@@ -406,7 +406,7 @@ const Index = () => {
 
           {/* Auto Tracking Section */}
           <div className="mb-3">
-            <h3 className="text-[10px] font-semibold text-foreground mb-1.5 flex items-center gap-1">
+            <h3 className="text-foreground mb-1.5 flex items-center gap-1 text-sm font-semibold">
               <span className="w-0.5 h-2.5 bg-primary rounded-full"></span>
               Auto Tracking
             </h3>
