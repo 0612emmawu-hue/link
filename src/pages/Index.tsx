@@ -400,8 +400,7 @@ const Index = () => {
 
         {/* Module 4: Stock Tracker */}
         <section>
-          <h2 className="text-xs font-semibold text-primary mb-3 uppercase tracking-wider flex items-center gap-1.5">
-            <span className="w-1 h-1 rounded-full bg-primary animate-pulse"></span>
+          <h2 className="text-base font-bold text-foreground mb-3 uppercase tracking-wider">
             Stock Tracker
           </h2>
 
