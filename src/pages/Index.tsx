@@ -143,13 +143,23 @@ const Index = () => {
   }];
 
   // TODO: Backend API - Analyze overall market sentiment from news and industry data
-  const mockMarketSentiment = {
+  // Scenario 1: Industry-level sentiment (when no specific companies mentioned)
+  const mockMarketSentimentIndustry = {
     items: [
-      { name: "Semiconductor", score: 75, sentiment: "positive" as const },
-      { name: "EV Supply Chain", score: 45, sentiment: "neutral" as const },
-      { name: "Cloud Computing", score: 65, sentiment: "positive" as const }
+      { name: "Semiconductor", score: 60, sentiment: "positive" as const },
+      { name: "EV Supply Chain", score: 20, sentiment: "neutral" as const }
     ],
     type: "industry" as const
+  };
+
+  // Scenario 2: Company-level sentiment (when specific companies mentioned)
+  const mockMarketSentimentCompany = {
+    items: [
+      { name: "NVIDIA", score: 75, sentiment: "positive" as const },
+      { name: "TSMC", score: 45, sentiment: "neutral" as const },
+      { name: "Intel", score: 25, sentiment: "negative" as const }
+    ],
+    type: "company" as const
   };
   const handleSaveNote = (noteContent: string) => {
     const newNote: Note = {
@@ -259,12 +269,26 @@ const Index = () => {
         </section>
 
         {/* Module 3: Overall Market Sentiment */}
-        <section>
-          <h3 className="text-xs font-semibold text-primary mb-2 uppercase tracking-wider flex items-center gap-1.5">
-            <span className="w-1 h-1 rounded-full bg-primary animate-pulse"></span>
-            Overall Market Sentiment
-          </h3>
-          <MarketSentimentCompact {...mockMarketSentiment} />
+        <section className="space-y-3">
+          {/* Scenario 1: Industry-level sentiment */}
+          <div>
+            <h3 className="text-xs font-semibold text-primary mb-2 uppercase tracking-wider flex items-center gap-1.5">
+              <span className="w-1 h-1 rounded-full bg-primary animate-pulse"></span>
+              Market Sentiment (Industry)
+            </h3>
+            <p className="text-[9px] text-muted-foreground mb-2">When news doesn't mention specific companies</p>
+            <MarketSentimentCompact {...mockMarketSentimentIndustry} />
+          </div>
+
+          {/* Scenario 2: Company-level sentiment */}
+          <div>
+            <h3 className="text-xs font-semibold text-primary mb-2 uppercase tracking-wider flex items-center gap-1.5">
+              <span className="w-1 h-1 rounded-full bg-primary animate-pulse"></span>
+              Market Sentiment (Company)
+            </h3>
+            <p className="text-[9px] text-muted-foreground mb-2">When news mentions specific companies</p>
+            <MarketSentimentCompact {...mockMarketSentimentCompany} />
+          </div>
         </section>
 
 
