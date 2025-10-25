@@ -31,7 +31,11 @@ const Index = () => {
   const [selectedStock, setSelectedStock] = useState<string | null>(null);
   const [chartLoading, setChartLoading] = useState(false);
   const [marketSentiment, setMarketSentiment] = useState<{
-    items: Array<{ name: string; score: number; sentiment: "positive" | "neutral" | "negative" }>;
+    items: Array<{
+      name: string;
+      score: number;
+      sentiment: "positive" | "neutral" | "negative";
+    }>;
     type: "industry" | "company";
   } | null>(null);
   const [sentimentLoading, setSentimentLoading] = useState(true);
@@ -47,10 +51,9 @@ const Index = () => {
     title: "Federal Reserve Maintains Interest Rates, Tech Stocks Surge",
     source: "Bloomberg",
     url: "https://bloomberg.com",
-    summary:
-      "The Federal Reserve decided to keep benchmark interest rates unchanged at its latest monetary policy meeting, in line with market expectations. The post-meeting statement indicates easing inflationary pressures and resilient economic growth.",
+    summary: "The Federal Reserve decided to keep benchmark interest rates unchanged at its latest monetary policy meeting, in line with market expectations. The post-meeting statement indicates easing inflationary pressures and resilient economic growth.",
     timestamp: "2 hours ago",
-    sentiment: "positive" as const,
+    sentiment: "positive" as const
   };
 
   // ========================================
@@ -60,48 +63,37 @@ const Index = () => {
   // 实现方式: 调用金融数据 API (例如: Alpha Vantage, Yahoo Finance, FMP)
   // 返回数据: [{ time: "HH:mm", price: number }]
   // API 路径: /api/stocks/intraday/:symbol
-  const mockChartData = [
-    {
-      time: "9:30",
-      price: 851.87,
-    },
-    {
-      time: "10:00",
-      price: 855.23,
-    },
-    {
-      time: "10:30",
-      price: 848.91,
-    },
-    {
-      time: "11:00",
-      price: 862.45,
-    },
-    {
-      time: "11:30",
-      price: 858.76,
-    },
-    {
-      time: "12:00",
-      price: 865.12,
-    },
-    {
-      time: "12:30",
-      price: 869.34,
-    },
-    {
-      time: "13:00",
-      price: 871.89,
-    },
-    {
-      time: "13:30",
-      price: 868.56,
-    },
-    {
-      time: "14:00",
-      price: 875.32,
-    },
-  ];
+  const mockChartData = [{
+    time: "9:30",
+    price: 851.87
+  }, {
+    time: "10:00",
+    price: 855.23
+  }, {
+    time: "10:30",
+    price: 848.91
+  }, {
+    time: "11:00",
+    price: 862.45
+  }, {
+    time: "11:30",
+    price: 858.76
+  }, {
+    time: "12:00",
+    price: 865.12
+  }, {
+    time: "12:30",
+    price: 869.34
+  }, {
+    time: "13:00",
+    price: 871.89
+  }, {
+    time: "13:30",
+    price: 868.56
+  }, {
+    time: "14:00",
+    price: 875.32
+  }];
 
   // ========================================
   // 后端接入点 3: AI 自动识别股票
@@ -113,26 +105,23 @@ const Index = () => {
   //   3. 通过金融 API 获取这些股票的实时价格和变化数据
   // 返回数据: [{ symbol, company, price, change, changePercent, sector, chartData }]
   // API 路径: /api/news/detect-stocks
-  const autoDetectedStocks = [
-    {
-      symbol: "NVDA",
-      company: "Nvidia",
-      price: 875.32,
-      change: 23.45,
-      changePercent: 2.75,
-      sector: "Technology",
-      chartData: mockChartData,
-    },
-    {
-      symbol: "MSFT",
-      company: "Microsoft",
-      price: 412.67,
-      change: 8.92,
-      changePercent: 2.21,
-      sector: "Technology",
-      chartData: mockChartData,
-    },
-  ];
+  const autoDetectedStocks = [{
+    symbol: "NVDA",
+    company: "Nvidia",
+    price: 875.32,
+    change: 23.45,
+    changePercent: 2.75,
+    sector: "Technology",
+    chartData: mockChartData
+  }, {
+    symbol: "MSFT",
+    company: "Microsoft",
+    price: 412.67,
+    change: 8.92,
+    changePercent: 2.21,
+    sector: "Technology",
+    chartData: mockChartData
+  }];
 
   // ========================================
   // 后端接入点 4: 用户自选股列表
@@ -143,26 +132,23 @@ const Index = () => {
   //   选项 2: 使用 Supabase 数据库存储 (支持跨设备同步)
   // 存储结构: { userId: string, watchlist: string[] }
   // API 路径: /api/user/watchlist (如使用后端存储)
-  const userSelectedStocks = [
-    {
-      symbol: "AMD",
-      company: "AMD",
-      price: 189.45,
-      change: 5.23,
-      changePercent: 2.84,
-      sector: "Semiconductors",
-      chartData: mockChartData,
-    },
-    {
-      symbol: "TSM",
-      company: "TSMC",
-      price: 145.78,
-      change: 3.12,
-      changePercent: 2.19,
-      sector: "Semiconductors",
-      chartData: mockChartData,
-    },
-  ];
+  const userSelectedStocks = [{
+    symbol: "AMD",
+    company: "AMD",
+    price: 189.45,
+    change: 5.23,
+    changePercent: 2.84,
+    sector: "Semiconductors",
+    chartData: mockChartData
+  }, {
+    symbol: "TSM",
+    company: "TSMC",
+    price: 145.78,
+    change: 3.12,
+    changePercent: 2.19,
+    sector: "Semiconductors",
+    chartData: mockChartData
+  }];
 
   // ========================================
   // 后端接入点 5: AI 产业链分析
@@ -181,39 +167,35 @@ const Index = () => {
   const mockIndustryChain = {
     upstream: {
       name: "Semiconductor Materials & Equipment",
-      companies: ["ASML", "Applied Materials", "Lam Research", "KLA Corp"],
+      companies: ["ASML", "Applied Materials", "Lam Research", "KLA Corp"]
     },
     midstream: {
       name: "Chip Design & Manufacturing",
-      companies: ["NVDA", "AMD", "Intel", "TSM", "Qualcomm"],
+      companies: ["NVDA", "AMD", "Intel", "TSM", "Qualcomm"]
     },
     downstream: {
       name: "AI Applications & Services",
-      companies: ["MSFT", "GOOGL", "META", "AMZN", "ORCL"],
-    },
+      companies: ["MSFT", "GOOGL", "META", "AMZN", "ORCL"]
+    }
   };
 
   // ========================================
   // 后端接入点 6: 市场板块分析 (已删除)
   // ========================================
   // 注: 此模块已根据用户要求删除
-  const mockMarketSegments = [
-    {
-      name: "Technology",
-      percentage: 45,
-      color: "hsl(var(--primary))",
-    },
-    {
-      name: "Semiconductors",
-      percentage: 30,
-      color: "hsl(142 76% 45%)",
-    },
-    {
-      name: "AI & Cloud",
-      percentage: 25,
-      color: "hsl(221 83% 53%)",
-    },
-  ];
+  const mockMarketSegments = [{
+    name: "Technology",
+    percentage: 45,
+    color: "hsl(var(--primary))"
+  }, {
+    name: "Semiconductors",
+    percentage: 30,
+    color: "hsl(142 76% 45%)"
+  }, {
+    name: "AI & Cloud",
+    percentage: 25,
+    color: "hsl(221 83% 53%)"
+  }];
 
   // ========================================
   // 后端接入点 7: 市场情绪分析
@@ -241,23 +223,33 @@ const Index = () => {
 
         // 临时使用 Mock 数据模拟 API 响应
         // 随机返回产业级或公司级情绪分析以演示两种场景
-        const mockResponse =
-          Math.random() > 0.5
-            ? {
-                items: [
-                  { name: "Semiconductor", score: 60, sentiment: "positive" as const },
-                  { name: "EV Supply Chain", score: 20, sentiment: "neutral" as const },
-                ],
-                type: "industry" as const,
-              }
-            : {
-                items: [
-                  { name: "NVIDIA", score: 75, sentiment: "positive" as const },
-                  { name: "TSMC", score: 45, sentiment: "neutral" as const },
-                  { name: "Intel", score: 25, sentiment: "negative" as const },
-                ],
-                type: "company" as const,
-              };
+        const mockResponse = Math.random() > 0.5 ? {
+          items: [{
+            name: "Semiconductor",
+            score: 60,
+            sentiment: "positive" as const
+          }, {
+            name: "EV Supply Chain",
+            score: 20,
+            sentiment: "neutral" as const
+          }],
+          type: "industry" as const
+        } : {
+          items: [{
+            name: "NVIDIA",
+            score: 75,
+            sentiment: "positive" as const
+          }, {
+            name: "TSMC",
+            score: 45,
+            sentiment: "neutral" as const
+          }, {
+            name: "Intel",
+            score: 25,
+            sentiment: "negative" as const
+          }],
+          type: "company" as const
+        };
 
         // 模拟 API 延迟
         setTimeout(() => {
@@ -269,7 +261,6 @@ const Index = () => {
         setSentimentLoading(false);
       }
     };
-
     fetchMarketSentiment();
   }, []);
   const handleSaveNote = (noteContent: string) => {
@@ -278,7 +269,7 @@ const Index = () => {
       content: noteContent,
       timestamp: new Date().toLocaleString(),
       newsUrl: mockNews.url,
-      newsTitle: mockNews.title,
+      newsTitle: mockNews.title
     };
     setNotes([newNote, ...notes]);
     // ========================================
@@ -291,13 +282,13 @@ const Index = () => {
     // TODO: 实现数据持久化
   };
   const handleDeleteNote = (id: string) => {
-    setNotes(notes.filter((note) => note.id !== id));
+    setNotes(notes.filter(note => note.id !== id));
     // TODO: 更新持久化存储
   };
   const handleExportNotes = () => {
     const dataStr = JSON.stringify(notes, null, 2);
     const dataBlob = new Blob([dataStr], {
-      type: "application/json",
+      type: "application/json"
     });
     const url = URL.createObjectURL(dataBlob);
     const link = document.createElement("a");
@@ -308,7 +299,7 @@ const Index = () => {
   const handleAddToWatchlist = (symbol: string) => {
     if (watchlist.length >= 6) {
       toast.error("Watchlist limit reached", {
-        description: "You can only track up to 6 stocks in your watchlist.",
+        description: "You can only track up to 6 stocks in your watchlist."
       });
       return;
     }
@@ -322,10 +313,9 @@ const Index = () => {
     // TODO: 保存到 localStorage 或后端数据库
   };
   const handleRemoveFromWatchlist = (symbol: string) => {
-    setWatchlist(watchlist.filter((s) => s !== symbol));
+    setWatchlist(watchlist.filter(s => s !== symbol));
     // TODO: 更新持久化存储
   };
-
   const handleStockClick = (symbol: string) => {
     if (selectedStock === symbol) {
       setSelectedStock(null);
@@ -339,15 +329,12 @@ const Index = () => {
       }, 500);
     }
   };
-
   const getSelectedStockData = () => {
     const allStocks = [...autoDetectedStocks, ...userSelectedStocks];
-    return allStocks.find((stock) => stock.symbol === selectedStock);
+    return allStocks.find(stock => stock.symbol === selectedStock);
   };
-
   const selectedStockData = getSelectedStockData();
-  return (
-    <div className="w-[420px] h-[600px] bg-background overflow-hidden flex flex-col">
+  return <div className="w-[420px] h-[600px] bg-background overflow-hidden flex flex-col">
       {/* Header */}
       <header className="flex-shrink-0 border-b border-border/50 bg-gradient-to-r from-card/80 to-card/40 backdrop-blur-xl">
         <div className="px-4 py-3">
@@ -363,41 +350,19 @@ const Index = () => {
             </div>
             <div className="flex items-center gap-2">
               <ThemeToggle />
-              <Button
-                size="sm"
-                variant="ghost"
-                className="h-8 w-8 p-0 hover:bg-primary/10 relative"
-                onClick={() => setShowNotesDashboard(true)}
-                title="Notes Dashboard"
-              >
+              <Button size="sm" variant="ghost" className="h-8 w-8 p-0 hover:bg-primary/10 relative" onClick={() => setShowNotesDashboard(true)} title="Notes Dashboard">
                 <BookOpen className="w-4 h-4" />
-                {notes.length > 0 && (
-                  <Badge className="absolute -top-1 -right-1 h-4 w-4 p-0 flex items-center justify-center text-[10px]">
+                {notes.length > 0 && <Badge className="absolute -top-1 -right-1 h-4 w-4 p-0 flex items-center justify-center text-[10px]">
                     {notes.length}
-                  </Badge>
-                )}
+                  </Badge>}
               </Button>
-              <Button
-                size="sm"
-                variant="ghost"
-                className="h-8 w-8 p-0 hover:bg-primary/10 relative"
-                onClick={() => setShowWatchlistDialog(true)}
-                title="Manage Watchlist"
-              >
+              <Button size="sm" variant="ghost" className="h-8 w-8 p-0 hover:bg-primary/10 relative" onClick={() => setShowWatchlistDialog(true)} title="Manage Watchlist">
                 <Eye className="w-4 h-4" />
-                {watchlist.length > 0 && (
-                  <Badge className="absolute -top-1 -right-1 h-4 w-4 p-0 flex items-center justify-center text-[10px]">
+                {watchlist.length > 0 && <Badge className="absolute -top-1 -right-1 h-4 w-4 p-0 flex items-center justify-center text-[10px]">
                     {watchlist.length}
-                  </Badge>
-                )}
+                  </Badge>}
               </Button>
-              <Button
-                size="sm"
-                variant="ghost"
-                className="h-8 w-8 p-0 hover:bg-primary/10"
-                onClick={() => setShowFloatingNotes(true)}
-                title="Quick Notes"
-              >
+              <Button size="sm" variant="ghost" className="h-8 w-8 p-0 hover:bg-primary/10" onClick={() => setShowFloatingNotes(true)} title="Quick Notes">
                 <Plus className="w-4 h-4" />
               </Button>
             </div>
@@ -414,9 +379,7 @@ const Index = () => {
 
         {/* Module 2: Industry Chain Analysis */}
         <section>
-          <h3 className="text-xs font-semibold text-foreground mb-2 uppercase tracking-wider">
-            Industry Chain Analysis
-          </h3>
+          <h3 className="text-foreground mb-2 uppercase tracking-wider text-base font-bold">INDUSTRY CHAIN</h3>
           <IndustryChainCompact {...mockIndustryChain} />
         </section>
 
@@ -427,21 +390,13 @@ const Index = () => {
             Overall Market Sentiment
           </h3>
 
-          {sentimentLoading ? (
-            <div className="h-20 flex items-center justify-center bg-card/30 rounded-lg border border-border/50">
+          {sentimentLoading ? <div className="h-20 flex items-center justify-center bg-card/30 rounded-lg border border-border/50">
               <p className="text-xs text-muted-foreground animate-pulse">Loading market sentiment...</p>
-            </div>
-          ) : marketSentiment ? (
-            <div className="animate-fade-in">
-              {marketSentiment.type === "industry" && (
-                <p className="text-[9px] text-muted-foreground mb-2">Industry-level analysis</p>
-              )}
-              {marketSentiment.type === "company" && (
-                <p className="text-[9px] text-muted-foreground mb-2">Company-level analysis</p>
-              )}
+            </div> : marketSentiment ? <div className="animate-fade-in">
+              {marketSentiment.type === "industry" && <p className="text-[9px] text-muted-foreground mb-2">Industry-level analysis</p>}
+              {marketSentiment.type === "company" && <p className="text-[9px] text-muted-foreground mb-2">Company-level analysis</p>}
               <MarketSentimentCompact {...marketSentiment} />
-            </div>
-          ) : null}
+            </div> : null}
         </section>
 
         {/* Module 4: Stock Tracker */}
@@ -459,19 +414,7 @@ const Index = () => {
             </h3>
             <p className="text-[9px] text-muted-foreground mb-1.5">Stocks detected from current news</p>
             <div className="grid grid-cols-2 gap-2">
-              {autoDetectedStocks.map((stock) => (
-                <StockCardCompact
-                  key={stock.symbol}
-                  symbol={stock.symbol}
-                  company={stock.company}
-                  price={stock.price}
-                  change={stock.change}
-                  changePercent={stock.changePercent}
-                  sector={stock.sector}
-                  isSelected={selectedStock === stock.symbol}
-                  onCardClick={() => handleStockClick(stock.symbol)}
-                />
-              ))}
+              {autoDetectedStocks.map(stock => <StockCardCompact key={stock.symbol} symbol={stock.symbol} company={stock.company} price={stock.price} change={stock.change} changePercent={stock.changePercent} sector={stock.sector} isSelected={selectedStock === stock.symbol} onCardClick={() => handleStockClick(stock.symbol)} />)}
             </div>
           </div>
 
@@ -483,34 +426,16 @@ const Index = () => {
             </h3>
             <p className="text-[9px] text-muted-foreground mb-1.5">Your manually tracked stocks</p>
             <div className="grid grid-cols-2 gap-2">
-              {userSelectedStocks.map((stock) => (
-                <StockCardCompact
-                  key={stock.symbol}
-                  symbol={stock.symbol}
-                  company={stock.company}
-                  price={stock.price}
-                  change={stock.change}
-                  changePercent={stock.changePercent}
-                  sector={stock.sector}
-                  isSelected={selectedStock === stock.symbol}
-                  onCardClick={() => handleStockClick(stock.symbol)}
-                />
-              ))}
+              {userSelectedStocks.map(stock => <StockCardCompact key={stock.symbol} symbol={stock.symbol} company={stock.company} price={stock.price} change={stock.change} changePercent={stock.changePercent} sector={stock.sector} isSelected={selectedStock === stock.symbol} onCardClick={() => handleStockClick(stock.symbol)} />)}
             </div>
           </div>
 
           {/* Price Chart Section */}
-          {selectedStock && (
-            <div className="animate-slide-in-top mt-2">
-              {chartLoading ? (
-                <div className="h-40 flex items-center justify-center bg-card/30 rounded-lg border border-border/50">
+          {selectedStock && <div className="animate-slide-in-top mt-2">
+              {chartLoading ? <div className="h-40 flex items-center justify-center bg-card/30 rounded-lg border border-border/50">
                   <p className="text-xs text-muted-foreground animate-pulse">Loading chart...</p>
-                </div>
-              ) : selectedStockData?.chartData ? (
-                <PriceChartCompact symbol={selectedStock} data={selectedStockData.chartData} />
-              ) : null}
-            </div>
-          )}
+                </div> : selectedStockData?.chartData ? <PriceChartCompact symbol={selectedStock} data={selectedStockData.chartData} /> : null}
+            </div>}
         </section>
 
         {/* Disclaimer */}
@@ -527,24 +452,10 @@ const Index = () => {
       {showFloatingNotes && <FloatingNotes onClose={() => setShowFloatingNotes(false)} onSave={handleSaveNote} />}
 
       {/* Notes Dashboard */}
-      {showNotesDashboard && (
-        <NotesDashboard
-          notes={notes}
-          onClose={() => setShowNotesDashboard(false)}
-          onDelete={handleDeleteNote}
-          onExport={handleExportNotes}
-        />
-      )}
+      {showNotesDashboard && <NotesDashboard notes={notes} onClose={() => setShowNotesDashboard(false)} onDelete={handleDeleteNote} onExport={handleExportNotes} />}
 
       {/* Watchlist Dialog */}
-      <WatchlistDialog
-        open={showWatchlistDialog}
-        onClose={() => setShowWatchlistDialog(false)}
-        watchlist={watchlist}
-        onAddStock={handleAddToWatchlist}
-        onRemoveStock={handleRemoveFromWatchlist}
-      />
-    </div>
-  );
+      <WatchlistDialog open={showWatchlistDialog} onClose={() => setShowWatchlistDialog(false)} watchlist={watchlist} onAddStock={handleAddToWatchlist} onRemoveStock={handleRemoveFromWatchlist} />
+    </div>;
 };
 export default Index;
