@@ -34,7 +34,7 @@ export const IndustryChainCompact = ({
             {label}
           </Badge>
           <div className="space-y-1">
-            <p className="text-xs font-semibold text-foreground">{node.name}</p>
+            <p className="text-foreground font-bold text-sm">{node.name}</p>
             <div className="flex flex-wrap gap-1 transition-all duration-250 ease-out">
               {displayedCompanies.map((company, idx) => <Badge key={idx} variant="secondary" className="bg-secondary hover:bg-secondary/80 transition-colors cursor-pointer text-xs py-0">
                   {company}
