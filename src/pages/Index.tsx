@@ -36,7 +36,13 @@ const Index = () => {
   } | null>(null);
   const [sentimentLoading, setSentimentLoading] = useState(true);
 
-  // Mock data - TODO: Replace with chrome.tabs API call to get current page content
+  // ========================================
+  // 后端接入点 1: 新闻内容获取
+  // ========================================
+  // 功能说明: 通过 Chrome Extension API 获取当前页面的新闻内容
+  // 实现方式: 使用 chrome.tabs API 读取当前标签页内容
+  // 返回数据: { title, source, url, summary, timestamp, sentiment }
+  // API 路径: /api/news/current-page
   const mockNews = {
     title: "Federal Reserve Maintains Interest Rates, Tech Stocks Surge",
     source: "Bloomberg",
@@ -46,7 +52,13 @@ const Index = () => {
     sentiment: "positive" as const
   };
 
-  // TODO: Backend API - Fetch real-time stock price data
+  // ========================================
+  // 后端接入点 2: 股票实时价格数据
+  // ========================================
+  // 功能说明: 获取股票的分时价格数据用于绘制价格走势图
+  // 实现方式: 调用金融数据 API (例如: Alpha Vantage, Yahoo Finance, FMP)
+  // 返回数据: [{ time: "HH:mm", price: number }]
+  // API 路径: /api/stocks/intraday/:symbol
   const mockChartData = [{
     time: "9:30",
     price: 851.87
@@ -79,7 +91,16 @@ const Index = () => {
     price: 875.32
   }];
 
-  // TODO: Backend API - Auto-detect stocks from news content using RAG
+  // ========================================
+  // 后端接入点 3: AI 自动识别股票
+  // ========================================
+  // 功能说明: 使用 AI 模型从新闻文本中自动识别相关股票
+  // 实现方式: 
+  //   1. 将新闻文本发送到后端
+  //   2. 使用 NER (命名实体识别) 或 LLM 提取公司名称和股票代码
+  //   3. 通过金融 API 获取这些股票的实时价格和变化数据
+  // 返回数据: [{ symbol, company, price, change, changePercent, sector, chartData }]
+  // API 路径: /api/news/detect-stocks
   const autoDetectedStocks = [{
     symbol: "NVDA",
     company: "Nvidia",
@@ -98,7 +119,15 @@ const Index = () => {
     chartData: mockChartData
   }];
 
-  // TODO: User-selected stocks stored in local storage
+  // ========================================
+  // 后端接入点 4: 用户自选股列表
+  // ========================================
+  // 功能说明: 从本地存储或后端数据库加载用户添加的自选股
+  // 实现方式: 
+  //   选项 1: 使用 localStorage 本地存储 (仅浏览器本地)
+  //   选项 2: 使用 Supabase 数据库存储 (支持跨设备同步)
+  // 存储结构: { userId: string, watchlist: string[] }
+  // API 路径: /api/user/watchlist (如使用后端存储)
   const userSelectedStocks = [{
     symbol: "AMD",
     company: "AMD",
@@ -117,7 +146,20 @@ const Index = () => {
     chartData: mockChartData
   }];
 
-  // TODO: Backend API - Auto-analyze industry chain from news content
+  // ========================================
+  // 后端接入点 5: AI 产业链分析
+  // ========================================
+  // 功能说明: 基于新闻内容自动分析相关的产业链上中下游公司
+  // 实现方式:
+  //   1. 将新闻文本发送到后端
+  //   2. 使用 LLM 识别新闻中提到的产业和公司
+  //   3. 根据产业知识图谱自动生成上中下游分类
+  // 返回数据: { 
+  //   upstream: { name, companies[] },
+  //   midstream: { name, companies[] },
+  //   downstream: { name, companies[] }
+  // }
+  // API 路径: /api/news/industry-chain
   const mockIndustryChain = {
     upstream: {
       name: "Semiconductor Materials & Equipment",
@@ -133,7 +175,10 @@ const Index = () => {
     }
   };
 
-  // TODO: Backend API - Analyze market segments from news content
+  // ========================================
+  // 后端接入点 6: 市场板块分析 (已删除)
+  // ========================================
+  // 注: 此模块已根据用户要求删除
   const mockMarketSegments = [{
     name: "Technology",
     percentage: 45,
@@ -148,18 +193,32 @@ const Index = () => {
     color: "hsl(221 83% 53%)"
   }];
 
-  // Load market sentiment data on component mount
+  // ========================================
+  // 后端接入点 7: 市场情绪分析
+  // ========================================
+  // 功能说明: 根据新闻内容分析市场对产业或公司的情绪倾向
+  // 实现方式:
+  //   1. 后端根据新闻文本判断是产业级还是公司级分析
+  //   2. 产业级: 从新闻中提取产业关键词，调用分析师观点或新闻 API，
+  //      使用 LLM 聚合情绪，输出情绪分数 (0-100)
+  //   3. 公司级: 使用 NER 检测公司名称，分别分析每家公司的情绪
+  // 返回数据: {
+  //   type: "industry" | "company",
+  //   items: [{ name, score, sentiment: "positive"|"neutral"|"negative" }]
+  // }
+  // API 路径: /api/news/market-sentiment
+  // 加载市场情绪数据
   useEffect(() => {
     const fetchMarketSentiment = async () => {
       setSentimentLoading(true);
       try {
-        // TODO: Replace with actual API call to /api/news/market-sentiment
+        // TODO: 替换为实际的 API 调用
         // const response = await fetch('/api/news/market-sentiment');
         // const data = await response.json();
         // setMarketSentiment(data);
         
-        // Mock data - simulating API response
-        // Randomly return either industry or company sentiment for demonstration
+        // 临时使用 Mock 数据模拟 API 响应
+        // 随机返回产业级或公司级情绪分析以演示两种场景
         const mockResponse = Math.random() > 0.5 
           ? {
               items: [
@@ -177,7 +236,7 @@ const Index = () => {
               type: "company" as const
             };
         
-        // Simulate API delay
+        // 模拟 API 延迟
         setTimeout(() => {
           setMarketSentiment(mockResponse);
           setSentimentLoading(false);
@@ -199,11 +258,18 @@ const Index = () => {
       newsTitle: mockNews.title
     };
     setNotes([newNote, ...notes]);
-    // TODO: Save to local storage
+    // ========================================
+    // 后端接入点 8: 笔记数据持久化
+    // ========================================
+    // 功能说明: 保存用户的笔记到持久化存储
+    // 实现方式:
+    //   选项 1: localStorage.setItem('notes', JSON.stringify(notes))
+    //   选项 2: 使用 Supabase 数据库存储 (支持跨设备同步)
+    // TODO: 实现数据持久化
   };
   const handleDeleteNote = (id: string) => {
     setNotes(notes.filter(note => note.id !== id));
-    // TODO: Update local storage
+    // TODO: 更新持久化存储
   };
   const handleExportNotes = () => {
     const dataStr = JSON.stringify(notes, null, 2);
@@ -225,11 +291,16 @@ const Index = () => {
     }
     setWatchlist([...watchlist, symbol]);
     toast.success("Stock added to watchlist");
-    // TODO: Save to local storage
+    // ========================================
+    // 后端接入点 9: 自选股列表持久化
+    // ========================================
+    // 功能说明: 保存用户的自选股列表
+    // 实现方式: 同后端接入点 4
+    // TODO: 保存到 localStorage 或后端数据库
   };
   const handleRemoveFromWatchlist = (symbol: string) => {
     setWatchlist(watchlist.filter(s => s !== symbol));
-    // TODO: Update local storage
+    // TODO: 更新持久化存储
   };
 
   const handleStockClick = (symbol: string) => {
@@ -238,7 +309,8 @@ const Index = () => {
     } else {
       setChartLoading(true);
       setSelectedStock(symbol);
-      // Simulate chart data loading
+      // 模拟加载图表数据
+      // 实际应用中应调用: /api/stocks/intraday/:symbol
       setTimeout(() => {
         setChartLoading(false);
       }, 500);
