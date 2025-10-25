@@ -414,8 +414,7 @@ const Index = () => {
 
         {/* Module 2: Industry Chain Analysis */}
         <section>
-          <h3 className="text-xs font-semibold text-primary mb-2 uppercase tracking-wider flex items-center gap-1.5">
-            <span className="w-1 h-1 rounded-full bg-primary animate-pulse"></span>
+          <h3 className="text-xs font-semibold text-foreground mb-2 uppercase tracking-wider">
             Industry Chain Analysis
           </h3>
           <IndustryChainCompact {...mockIndustryChain} />
