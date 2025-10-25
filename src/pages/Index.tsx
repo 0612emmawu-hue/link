@@ -4,6 +4,7 @@ import { IndustryChainCompact } from "@/components/IndustryChainCompact";
 import { AnalystOpinionCompact } from "@/components/AnalystOpinionCompact";
 import { AISummary } from "@/components/AISummary";
 import { MarketSegmentCompact } from "@/components/MarketSegmentCompact";
+import { MarketSentimentCompact } from "@/components/MarketSentimentCompact";
 import { FloatingNotes } from "@/components/FloatingNotes";
 import { NotesDashboard } from "@/components/NotesDashboard";
 import { WatchlistDialog } from "@/components/WatchlistDialog";
@@ -140,6 +141,16 @@ const Index = () => {
     percentage: 25,
     color: "hsl(221 83% 53%)"
   }];
+
+  // TODO: Backend API - Analyze overall market sentiment from news and industry data
+  const mockMarketSentiment = {
+    items: [
+      { name: "Semiconductor", score: 75, sentiment: "positive" as const },
+      { name: "EV Supply Chain", score: 45, sentiment: "neutral" as const },
+      { name: "Cloud Computing", score: 65, sentiment: "positive" as const }
+    ],
+    type: "industry" as const
+  };
   const handleSaveNote = (noteContent: string) => {
     const newNote: Note = {
       id: Date.now().toString(),
@@ -245,6 +256,15 @@ const Index = () => {
             Industry Chain Analysis
           </h3>
           <IndustryChainCompact {...mockIndustryChain} />
+        </section>
+
+        {/* Module 3: Overall Market Sentiment */}
+        <section>
+          <h3 className="text-xs font-semibold text-primary mb-2 uppercase tracking-wider flex items-center gap-1.5">
+            <span className="w-1 h-1 rounded-full bg-primary animate-pulse"></span>
+            Overall Market Sentiment
+          </h3>
+          <MarketSentimentCompact {...mockMarketSentiment} />
         </section>
 
         {/* Module 3: Market Segment */}
