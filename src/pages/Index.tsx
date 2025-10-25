@@ -13,7 +13,7 @@ import { Sparkles, BookOpen, Plus, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 interface Note {
   id: string;
   content: string;
@@ -29,6 +29,11 @@ const Index = () => {
   const [watchlist, setWatchlist] = useState<string[]>(["AMD", "TSM"]); // TODO: Load from local storage
   const [selectedStock, setSelectedStock] = useState<string | null>(null);
   const [chartLoading, setChartLoading] = useState(false);
+  const [marketSentiment, setMarketSentiment] = useState<{
+    items: Array<{ name: string; score: number; sentiment: "positive" | "neutral" | "negative" }>;
+    type: "industry" | "company";
+  } | null>(null);
+  const [sentimentLoading, setSentimentLoading] = useState(true);
 
   // Mock data - TODO: Replace with chrome.tabs API call to get current page content
   const mockNews = {
@@ -142,25 +147,48 @@ const Index = () => {
     color: "hsl(221 83% 53%)"
   }];
 
-  // TODO: Backend API - Analyze overall market sentiment from news and industry data
-  // Scenario 1: Industry-level sentiment (when no specific companies mentioned)
-  const mockMarketSentimentIndustry = {
-    items: [
-      { name: "Semiconductor", score: 60, sentiment: "positive" as const },
-      { name: "EV Supply Chain", score: 20, sentiment: "neutral" as const }
-    ],
-    type: "industry" as const
-  };
+  // Load market sentiment data on component mount
+  useEffect(() => {
+    const fetchMarketSentiment = async () => {
+      setSentimentLoading(true);
+      try {
+        // TODO: Replace with actual API call to /api/news/market-sentiment
+        // const response = await fetch('/api/news/market-sentiment');
+        // const data = await response.json();
+        // setMarketSentiment(data);
+        
+        // Mock data - simulating API response
+        // Randomly return either industry or company sentiment for demonstration
+        const mockResponse = Math.random() > 0.5 
+          ? {
+              items: [
+                { name: "Semiconductor", score: 60, sentiment: "positive" as const },
+                { name: "EV Supply Chain", score: 20, sentiment: "neutral" as const }
+              ],
+              type: "industry" as const
+            }
+          : {
+              items: [
+                { name: "NVIDIA", score: 75, sentiment: "positive" as const },
+                { name: "TSMC", score: 45, sentiment: "neutral" as const },
+                { name: "Intel", score: 25, sentiment: "negative" as const }
+              ],
+              type: "company" as const
+            };
+        
+        // Simulate API delay
+        setTimeout(() => {
+          setMarketSentiment(mockResponse);
+          setSentimentLoading(false);
+        }, 500);
+      } catch (error) {
+        console.error("Failed to fetch market sentiment:", error);
+        setSentimentLoading(false);
+      }
+    };
 
-  // Scenario 2: Company-level sentiment (when specific companies mentioned)
-  const mockMarketSentimentCompany = {
-    items: [
-      { name: "NVIDIA", score: 75, sentiment: "positive" as const },
-      { name: "TSMC", score: 45, sentiment: "neutral" as const },
-      { name: "Intel", score: 25, sentiment: "negative" as const }
-    ],
-    type: "company" as const
-  };
+    fetchMarketSentiment();
+  }, []);
   const handleSaveNote = (noteContent: string) => {
     const newNote: Note = {
       id: Date.now().toString(),
@@ -269,26 +297,27 @@ const Index = () => {
         </section>
 
         {/* Module 3: Overall Market Sentiment */}
-        <section className="space-y-3">
-          {/* Scenario 1: Industry-level sentiment */}
-          <div>
-            <h3 className="text-xs font-semibold text-primary mb-2 uppercase tracking-wider flex items-center gap-1.5">
-              <span className="w-1 h-1 rounded-full bg-primary animate-pulse"></span>
-              Market Sentiment (Industry)
-            </h3>
-            <p className="text-[9px] text-muted-foreground mb-2">When news doesn't mention specific companies</p>
-            <MarketSentimentCompact {...mockMarketSentimentIndustry} />
-          </div>
-
-          {/* Scenario 2: Company-level sentiment */}
-          <div>
-            <h3 className="text-xs font-semibold text-primary mb-2 uppercase tracking-wider flex items-center gap-1.5">
-              <span className="w-1 h-1 rounded-full bg-primary animate-pulse"></span>
-              Market Sentiment (Company)
-            </h3>
-            <p className="text-[9px] text-muted-foreground mb-2">When news mentions specific companies</p>
-            <MarketSentimentCompact {...mockMarketSentimentCompany} />
-          </div>
+        <section>
+          <h3 className="text-xs font-semibold text-primary mb-2 uppercase tracking-wider flex items-center gap-1.5">
+            <span className="w-1 h-1 rounded-full bg-primary animate-pulse"></span>
+            Overall Market Sentiment
+          </h3>
+          
+          {sentimentLoading ? (
+            <div className="h-20 flex items-center justify-center bg-card/30 rounded-lg border border-border/50">
+              <p className="text-xs text-muted-foreground animate-pulse">Loading market sentiment...</p>
+            </div>
+          ) : marketSentiment ? (
+            <div className="animate-fade-in">
+              {marketSentiment.type === "industry" && (
+                <p className="text-[9px] text-muted-foreground mb-2">Industry-level analysis</p>
+              )}
+              {marketSentiment.type === "company" && (
+                <p className="text-[9px] text-muted-foreground mb-2">Company-level analysis</p>
+              )}
+              <MarketSentimentCompact {...marketSentiment} />
+            </div>
+          ) : null}
         </section>
 
 
