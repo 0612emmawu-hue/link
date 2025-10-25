@@ -418,7 +418,7 @@ const Index = () => {
 
           {/* User Watchlist Section */}
           <div className="mb-3">
-            <h3 className="text-[10px] font-semibold text-foreground mb-1.5 flex items-center gap-1">
+            <h3 className="font-semibold text-foreground mb-1.5 flex items-center gap-1 text-sm">
               <span className="w-0.5 h-2.5 bg-primary rounded-full"></span>
               User Watchlist
             </h3>
