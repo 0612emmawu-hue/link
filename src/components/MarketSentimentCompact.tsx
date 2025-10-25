@@ -1,6 +1,4 @@
 import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { TrendingUp, TrendingDown, Minus } from "lucide-react";
 
 interface SentimentItem {
   name: string;
@@ -14,54 +12,37 @@ interface MarketSentimentCompactProps {
 }
 
 export const MarketSentimentCompact = ({ items, type }: MarketSentimentCompactProps) => {
-  const getSentimentIcon = (sentiment: string) => {
+  const getSentimentLabel = (sentiment: string) => {
     switch (sentiment) {
       case "positive":
-        return <TrendingUp className="w-3.5 h-3.5 text-bullish" />;
+        return "Positive";
       case "negative":
-        return <TrendingDown className="w-3.5 h-3.5 text-bearish" />;
+        return "Negative";
       default:
-        return <Minus className="w-3.5 h-3.5 text-muted-foreground" />;
+        return "Neutral";
     }
   };
 
-  const getSentimentColor = (sentiment: string) => {
+  const getSentimentBarColor = (sentiment: string) => {
     switch (sentiment) {
       case "positive":
-        return "text-bullish";
+        return "from-[#5562FF] to-[#6E77FF]";
       case "negative":
-        return "text-bearish";
+        return "from-[#FF5E5E] to-[#FF5E5E]";
       default:
-        return "text-muted-foreground";
+        return "from-[#9BA3AF] to-[#9BA3AF]";
     }
   };
 
-  const renderBar = (score: number, sentiment: string) => {
-    const filled = Math.round(score / 20);
-    const empty = 5 - filled;
-    
-    return (
-      <div className="flex items-center gap-0.5">
-        {[...Array(filled)].map((_, i) => (
-          <div
-            key={`filled-${i}`}
-            className={`w-1.5 h-1.5 rounded-full ${
-              sentiment === "positive"
-                ? "bg-bullish"
-                : sentiment === "negative"
-                ? "bg-bearish"
-                : "bg-muted-foreground"
-            }`}
-          />
-        ))}
-        {[...Array(empty)].map((_, i) => (
-          <div
-            key={`empty-${i}`}
-            className="w-1.5 h-1.5 rounded-full bg-muted/30"
-          />
-        ))}
-      </div>
-    );
+  const getSentimentTextColor = (sentiment: string) => {
+    switch (sentiment) {
+      case "positive":
+        return "text-[#6E77FF]";
+      case "negative":
+        return "text-[#FF5E5E]";
+      default:
+        return "text-[#9BA3AF]";
+    }
   };
 
   return (
@@ -72,20 +53,21 @@ export const MarketSentimentCompact = ({ items, type }: MarketSentimentCompactPr
       </h4>
       <div className="space-y-2.5">
         {items.map((item, idx) => (
-          <div
-            key={idx}
-            className="flex items-center justify-between p-2.5 rounded-md bg-card/30 border border-border/20"
-          >
-            <div className="flex items-center gap-2.5 flex-1">
-              <div className="flex items-center gap-1.5 min-w-[100px]">
-                {getSentimentIcon(item.sentiment)}
-                <span className="text-sm font-medium text-foreground truncate">{item.name}</span>
-              </div>
-              {renderBar(item.score, item.sentiment)}
+          <div key={idx} className="space-y-1.5">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-medium text-foreground">{item.name}</span>
+              <span className={`text-[10px] font-semibold ${getSentimentTextColor(item.sentiment)}`}>
+                {getSentimentLabel(item.sentiment)} {item.score}%
+              </span>
             </div>
-            <span className={`text-xs font-semibold ${getSentimentColor(item.sentiment)} ml-2`}>
-              {item.score}%
-            </span>
+            <div className="relative h-[12px] bg-muted/20 rounded-full overflow-hidden">
+              <div
+                className={`absolute left-0 top-0 h-full bg-gradient-to-r ${getSentimentBarColor(
+                  item.sentiment
+                )} rounded-full transition-all duration-[400ms] ease-out`}
+                style={{ width: `${item.score}%` }}
+              />
+            </div>
           </div>
         ))}
       </div>

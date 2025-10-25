@@ -1,6 +1,4 @@
 import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { TrendingUp, TrendingDown, Minus } from "lucide-react";
 
 interface SentimentItem {
   name: string;
@@ -14,39 +12,6 @@ interface MarketSentimentProps {
 }
 
 export const MarketSentiment = ({ items, type }: MarketSentimentProps) => {
-  const getSentimentIcon = (sentiment: string) => {
-    switch (sentiment) {
-      case "positive":
-        return <TrendingUp className="w-4 h-4 text-bullish" />;
-      case "negative":
-        return <TrendingDown className="w-4 h-4 text-bearish" />;
-      default:
-        return <Minus className="w-4 h-4 text-muted-foreground" />;
-    }
-  };
-
-  const getSentimentColor = (sentiment: string) => {
-    switch (sentiment) {
-      case "positive":
-        return "text-bullish";
-      case "negative":
-        return "text-bearish";
-      default:
-        return "text-muted-foreground";
-    }
-  };
-
-  const getSentimentBg = (sentiment: string) => {
-    switch (sentiment) {
-      case "positive":
-        return "bg-bullish/20";
-      case "negative":
-        return "bg-bearish/20";
-      default:
-        return "bg-muted/20";
-    }
-  };
-
   const getSentimentLabel = (sentiment: string) => {
     switch (sentiment) {
       case "positive":
@@ -58,32 +23,26 @@ export const MarketSentiment = ({ items, type }: MarketSentimentProps) => {
     }
   };
 
-  const renderBar = (score: number, sentiment: string) => {
-    const filled = Math.round(score / 20);
-    const empty = 5 - filled;
-    
-    return (
-      <div className="flex items-center gap-1">
-        {[...Array(filled)].map((_, i) => (
-          <div
-            key={`filled-${i}`}
-            className={`w-2 h-2 rounded-full ${
-              sentiment === "positive"
-                ? "bg-bullish"
-                : sentiment === "negative"
-                ? "bg-bearish"
-                : "bg-muted-foreground"
-            }`}
-          />
-        ))}
-        {[...Array(empty)].map((_, i) => (
-          <div
-            key={`empty-${i}`}
-            className="w-2 h-2 rounded-full bg-muted/30"
-          />
-        ))}
-      </div>
-    );
+  const getSentimentBarColor = (sentiment: string) => {
+    switch (sentiment) {
+      case "positive":
+        return "from-[#5562FF] to-[#6E77FF]";
+      case "negative":
+        return "from-[#FF5E5E] to-[#FF5E5E]";
+      default:
+        return "from-[#9BA3AF] to-[#9BA3AF]";
+    }
+  };
+
+  const getSentimentTextColor = (sentiment: string) => {
+    switch (sentiment) {
+      case "positive":
+        return "text-[#6E77FF]";
+      case "negative":
+        return "text-[#FF5E5E]";
+      default:
+        return "text-[#9BA3AF]";
+    }
   };
 
   return (
@@ -92,28 +51,25 @@ export const MarketSentiment = ({ items, type }: MarketSentimentProps) => {
         <span className="w-1 h-6 bg-gradient-primary rounded-full"></span>
         Overall Market Sentiment
       </h3>
-      <div className="space-y-4">
+      <div className="space-y-3">
         {items.map((item, idx) => (
           <div
             key={idx}
-            className="flex items-center justify-between p-4 rounded-lg bg-card/50 border border-border/30 hover:border-primary/30 transition-all"
+            className="group"
           >
-            <div className="flex items-center gap-4 flex-1">
-              <div className="flex items-center gap-2 min-w-[140px]">
-                {getSentimentIcon(item.sentiment)}
-                <span className="font-medium text-foreground">{item.name}</span>
-              </div>
-              {renderBar(item.score, item.sentiment)}
-            </div>
-            <div className="flex items-center gap-3">
-              <Badge
-                variant="secondary"
-                className={`${getSentimentBg(item.sentiment)} ${getSentimentColor(
-                  item.sentiment
-                )} border-0`}
-              >
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-sm font-medium text-foreground">{item.name}</span>
+              <span className={`text-sm font-semibold ${getSentimentTextColor(item.sentiment)}`}>
                 {getSentimentLabel(item.sentiment)} {item.score}%
-              </Badge>
+              </span>
+            </div>
+            <div className="relative h-3 bg-muted/20 rounded-full overflow-hidden">
+              <div
+                className={`absolute left-0 top-0 h-full bg-gradient-to-r ${getSentimentBarColor(
+                  item.sentiment
+                )} rounded-full transition-all duration-[400ms] ease-out`}
+                style={{ width: `${item.score}%` }}
+              />
             </div>
           </div>
         ))}
