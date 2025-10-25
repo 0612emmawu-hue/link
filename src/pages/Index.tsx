@@ -422,7 +422,7 @@ const Index = () => {
               <span className="w-0.5 h-2.5 bg-primary rounded-full"></span>
               User Watchlist
             </h3>
-            <p className="text-[9px] text-muted-foreground mb-1.5">Your manually tracked stocks</p>
+            <p className="text-muted-foreground mb-1.5 text-xs font-semibold">Your manually tracked stocks</p>
             <div className="grid grid-cols-2 gap-2">
               {userSelectedStocks.map(stock => <StockCardCompact key={stock.symbol} symbol={stock.symbol} company={stock.company} price={stock.price} change={stock.change} changePercent={stock.changePercent} sector={stock.sector} isSelected={selectedStock === stock.symbol} onCardClick={() => handleStockClick(stock.symbol)} />)}
             </div>
