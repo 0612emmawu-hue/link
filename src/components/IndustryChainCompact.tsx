@@ -52,7 +52,7 @@ export const IndustryChainCompact = ({
   };
   return <Card className="p-4 bg-gradient-to-br from-card/80 to-card/40 backdrop-blur-xl border-border/50 shadow-card">
           
-      <div className="space-y-0">
+      <div className="space-y-3">
         <ChainSection node={upstream} label="Upstream" showArrowBelow />
         <ChainSection node={midstream} label="Midstream" showArrowBelow />
         <ChainSection node={downstream} label="Downstream" showArrowBelow />
