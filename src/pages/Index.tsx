@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { useState, useEffect } from "react";
+import { toast } from "sonner";
 interface Note {
   id: string;
   content: string;
@@ -216,7 +217,14 @@ const Index = () => {
     link.click();
   };
   const handleAddToWatchlist = (symbol: string) => {
+    if (watchlist.length >= 6) {
+      toast.error("Watchlist limit reached", {
+        description: "You can only track up to 6 stocks in your watchlist."
+      });
+      return;
+    }
     setWatchlist([...watchlist, symbol]);
+    toast.success("Stock added to watchlist");
     // TODO: Save to local storage
   };
   const handleRemoveFromWatchlist = (symbol: string) => {
