@@ -50,23 +50,22 @@ export const IndustryChainCompact = ({ upstream, midstream, downstream }: Indust
           </div>
         </div>
         {showArrowBelow && (
-          <div className="flex items-center gap-2 w-full py-2">
-            <div className="flex-1 h-px bg-foreground" />
-            {hasMore && (
-              <button
-                onClick={() => setIsExpanded(!isExpanded)}
-                className="cursor-pointer hover:bg-muted/50 rounded-full p-1 transition-all duration-200"
-                aria-label={isExpanded ? "Collapse" : "Expand"}
-              >
-                <ChevronRight 
-                  className={`w-3.5 h-3.5 text-foreground transition-all duration-300 ${
-                    isExpanded ? 'rotate-[-90deg]' : 'rotate-90'
-                  }`}
-                />
-              </button>
-            )}
-            <div className="flex-1 h-px bg-foreground" />
-          </div>
+          <button
+            onClick={hasMore ? () => setIsExpanded(!isExpanded) : undefined}
+            className={`flex justify-center w-full py-1 ${
+              hasMore ? 'cursor-pointer hover:bg-primary/5 rounded transition-all duration-200' : 'cursor-default'
+            }`}
+            disabled={!hasMore}
+            aria-label={isExpanded ? "Collapse" : "Expand"}
+          >
+            <ChevronRight 
+              className={`w-4 h-4 text-primary transition-all duration-300 ${
+                hasMore ? 'hover:text-primary-glow' : ''
+              } ${
+                isExpanded ? 'rotate-[-90deg]' : 'rotate-90'
+              }`}
+            />
+          </button>
         )}
       </>
     );
